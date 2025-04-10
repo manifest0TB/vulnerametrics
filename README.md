@@ -1,2 +1,2 @@
 # vulnerametrics
-Seven figures SaaS (?)
+First step in process!
