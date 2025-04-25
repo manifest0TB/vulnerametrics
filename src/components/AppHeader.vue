@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // src/components/AppHeader.vue
-import { ref, computed, onMounted, watch } from 'vue'; // Import computed, onMounted, and watch
+import { computed, onMounted, watch } from 'vue'; // Import computed, onMounted, and watch
 import { RouterLink, useRouter } from 'vue-router'; // Import useRouter
 import { useAuthStore } from '@/stores/auth'; // Import the auth store
 import { useCreditsStore } from '@/stores/credits';
@@ -11,6 +11,7 @@ const creditsStore = useCreditsStore();
 const router = useRouter();
 
 // Use computed properties to reactively get data from the store
+const isAuthLoading = computed(() => authStore.loading);
 const isLoggedIn = computed(() => authStore.isAuthenticated);
 const userNickname = computed(() => {
   const attributes = authStore.userAttributes;
@@ -22,9 +23,7 @@ const isLoadingCredits = computed(() => creditsStore.loading);
 
 // Fetch credits when component is mounted and user is logged in
 onMounted(async () => {
-  if (authStore.isAuthenticated) {
-    await creditsStore.fetchCredits();
-  }
+  // Credits are now fetched based on the watch below, no need to duplicate here if checkAuth triggers it
 });
 
 // Watch for authentication state changes
@@ -32,7 +31,7 @@ watch(() => authStore.isAuthenticated, async (isAuthenticated) => {
   if (isAuthenticated) {
     await creditsStore.fetchCredits();
   }
-});
+}, { immediate: false }); // Don't run immediately, let the initial checkAuth handle the first load
 
 // Logout handler
 const handleLogout = async () => {
@@ -56,7 +55,12 @@ const handleLogout = async () => {
           class="mr-3 h-10 w-auto" /> </RouterLink>
 
       <nav class="flex items-center space-x-4">
-        <template v-if="isLoggedIn">
+        <template v-if="isAuthLoading && !isLoggedIn">
+          <!-- Show loading indicator ONLY during initial load -->
+          <span class="text-sm text-gray-400">Loading session...</span>
+        </template>
+        <template v-else-if="isLoggedIn">
+          <!-- User is logged in -->
           <span class="text-sm text-gray-300">
             Welcome,
             <span class="font-medium text-gray-100">{{ userNickname }}</span>
@@ -77,6 +81,7 @@ const handleLogout = async () => {
           </button>
         </template>
         <template v-else>
+          <!-- User is not logged in -->
           <RouterLink
             to="/login"
             class="rounded px-3 py-1 text-sm text-gray-200 transition-colors hover:bg-gray-700 hover:text-white"

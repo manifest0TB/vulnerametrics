@@ -1,10 +1,20 @@
 <script setup lang="ts">
 // src/App.vue
-
+import { onMounted } from 'vue';
 import AppHeader from '@/components/AppHeader.vue';
 import AppFooter from '@/components/AppFooter.vue';
 import { RouterView } from 'vue-router';
+import { useAuthStore } from '@/stores/auth';
 
+const authStore = useAuthStore();
+
+onMounted(async () => {
+  try {
+    await authStore.checkAuth();
+  } catch (error) {
+    console.error('Error initializing auth:', error);
+  }
+});
 </script>
 
 <template>

@@ -22,9 +22,6 @@ const validationErrors = ref<{ [key: string]: string | undefined }>({});
 // State for password visibility toggle
 const isPasswordVisible = ref<boolean>(false);
 
-// Local state for password mismatch error
-const passwordMismatch = ref<boolean>(false);
-
 // Computed properties from store
 const isLoading = computed(() => authStore.loading);
 const errorMessage = computed(() => authStore.error);
@@ -135,21 +132,6 @@ const handleResetPassword = async () => {
     console.error('Error during password reset:', error);
   }
 };
-
-// Add password requirements display
-const passwordRequirements = [
-  'Contains at least 8 characters',
-  'Contains at least 1 number',
-  'Contains at least 1 lowercase letter',
-  'Contains at least 1 uppercase letter',
-  'Contains at least 1 special character'
-];
-
-// Add reactive validation for password requirements
-const passwordMeetsRequirements = computed(() => {
-  if (!newPassword.value) return false;
-  return validatePassword(newPassword.value).isValid;
-});
 </script>
 
 <template>
@@ -255,18 +237,6 @@ const passwordMeetsRequirements = computed(() => {
           <p v-if="validationErrors.confirmPassword" class="mt-2 text-sm text-red-600">
             {{ validationErrors.confirmPassword }}
           </p>
-        </div>
-
-        <!-- Password Requirements Display -->
-        <div class="mt-2 space-y-1">
-          <p class="text-sm font-medium text-gray-700">Password requirements:</p>
-          <ul class="text-xs text-gray-600 space-y-1">
-            <li>At least 8 characters long</li>
-            <li>Contains at least 1 number</li>
-            <li>Contains at least 1 lowercase letter</li>
-            <li>Contains at least 1 uppercase letter</li>
-            <li>Contains at least 1 special character</li>
-          </ul>
         </div>
 
         <!-- Error/Success Messages -->

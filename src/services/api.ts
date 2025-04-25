@@ -1,11 +1,11 @@
-import { getCurrentUser, fetchAuthSession } from 'aws-amplify/auth';
+import { fetchAuthSession } from 'aws-amplify/auth';
 import type { CveDetails, CreditsResponse, ApiError } from '@/types/api';
 
 class ApiService {
   private baseUrl: string;
 
   constructor() {
-    this.baseUrl = '/api';
+    this.baseUrl = 'https://wg77sau8q5.execute-api.us-east-1.amazonaws.com/prod';
   }
 
   private async getAuthHeaders(): Promise<HeadersInit> {
@@ -45,7 +45,8 @@ class ApiService {
       this.handleApiError(response);
     }
 
-    return response.json();
+    const data = await response.json();
+    return data as CreditsResponse;
   }
 
   async getCveDetails(cveId: string): Promise<CveDetails> {
@@ -61,7 +62,8 @@ class ApiService {
       this.handleApiError(response);
     }
 
-    return response.json();
+    const data = await response.json();
+    return data as CveDetails;
   }
 
   async generateReport(cveId: string): Promise<Blob> {

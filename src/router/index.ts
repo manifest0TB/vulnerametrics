@@ -84,7 +84,7 @@ const router = createRouter({
 })
 
 // Navigation guard
-router.beforeEach(async (to, from, next) => {
+router.beforeEach(async (to, _from, next) => {
   try {
     const user = await getCurrentUser()
     const isAuthenticated = !!user
