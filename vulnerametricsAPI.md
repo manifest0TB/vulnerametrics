@@ -160,4 +160,4 @@ This API does not utilize API Gateway API Keys for authentication or authorizati
 ### Additional Protections (Built-in)
 
 * **API Gateway Features:** The service provides inherent protection against certain types of DDoS attacks and manages request throttling.
-* *(Note: AWS WAF is planned for implementation in Phase 6 to provide further protection against common web exploits like SQL injection, XSS, and malicious bots, and to enable rate-based rules).*
+* *(Note: AWS WAF was configurate in Phase 6 to provide further protection against common web exploits like SQL injection, XSS, and malicious bots, and to enable rate-based rules).*
