@@ -224,29 +224,29 @@ const resetSearch = () => {
             </div>
             <h3 class="text-3xl font-bold text-[#21C063] mb-6 text-center">Vulnerability Found</h3>
             <div class="bg-[#18181B] rounded-xl p-8 mb-6 shadow-sm border border-[#23272F] w-full">
-              <h4 class="text-2xl font-medium text-white mb-3">{{ cveDetails.id }}</h4>
+              <h4 class="text-2xl font-medium text-white mb-3 text-center">{{ cveDetails.id }}</h4>
               <p class="text-lg text-[#B0B3B8]">{{ cveDetails.description }}</p>
-          </div>
+            </div>
             <div class="flex flex-col items-center w-full">
-            <button
-              v-if="!reportUrl"
-              @click="handleGenerateReport"
-                :disabled="!canGenerateReport || isGeneratingReport || !authStore.isAuthenticated"
+              <button
+                v-if="!reportUrl"
+                @click="handleGenerateReport"
+                :disabled="!canGenerateReport || isGeneratingReport"
                 class="bg-[#21C063] hover:bg-[#16994A] text-white px-10 py-4 rounded-xl shadow-lg text-xl font-semibold transition disabled:cursor-not-allowed disabled:opacity-50 mb-4"
-              :class="{ 'animate-pulse': isGeneratingReport }"
-            >
-              {{ isGeneratingReport ? 'Generating...' : 'Generate Report' }}
-            </button>
-            <a
-              v-else
-              :href="reportUrl"
+                :class="{ 'animate-pulse': isGeneratingReport }"
+              >
+                {{ isGeneratingReport ? 'Generating...' : 'Generate Report' }}
+              </button>
+              <a
+                v-else
+                :href="reportUrl"
                 target="_blank"
                 rel="noopener"
-              download="vulnerability-report.pdf"
+                download="vulnerability-report.pdf"
                 class="bg-[#21C063] hover:bg-[#16994A] text-white px-10 py-4 rounded-xl shadow-lg text-xl font-semibold transition mb-4"
-            >
-              Download Report
-            </a>
+              >
+                Download Report
+              </a>
               <button
                 v-if="reportUrl"
                 @click="resetSearch"
