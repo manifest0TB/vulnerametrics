@@ -62,7 +62,7 @@ const hasEnoughCredits = computed(() => (creditsStore.credits ?? 0) > 0);
 const canGenerateReport = computed(() => cveDetails.value && hasEnoughCredits.value);
 
 const userName = computed(() => {
-  // Intenta obtener el nickname, si no, el username
+  // Try to get the nickname, otherwise the username
   return (
     authStore.userAttributes?.nickname ||
     authStore.userAttributes?.email ||
@@ -109,7 +109,7 @@ const handleGenerateReport = async () => {
 
   try {
     const reportResponse = await apiService.generateReport(cveIdInput.value);
-    // Obtener el pre-signed URL usando Amplify Storage v6
+    // Get the pre-signed URL using Amplify Storage v6
     const { url } = await getUrl({ path: reportResponse.reportKey, options: { expiresIn: 300 } });
     reportUrl.value = url.toString();
     // Refresh credits after generating report
@@ -125,7 +125,7 @@ const handleGenerateReport = async () => {
 
 const handleLogout = async () => {
   await authStore.logout();
-  // Puedes redirigir si lo deseas
+  // You can redirect if you want
 };
 
 // Clean up the blob URL when component is unmounted
@@ -135,7 +135,7 @@ onUnmounted(() => {
   }
 });
 
-// Redirigir a login si no está autenticado (descomenta si lo deseas)
+// Redirect to login if not authenticated (uncomment if you want)
 // const router = useRouter();
 // watchEffect(() => {
 //   if (!authStore.isAuthenticated) {
@@ -143,7 +143,7 @@ onUnmounted(() => {
 //   }
 // });
 
-// Handler para reiniciar la búsqueda
+// Handler to reset the search
 const resetSearch = () => {
   cveDetails.value = null;
   reportUrl.value = null;
@@ -225,7 +225,54 @@ const resetSearch = () => {
             <h3 class="text-3xl font-bold text-[#21C063] mb-6 text-center">Vulnerability Found</h3>
             <div class="bg-[#18181B] rounded-xl p-8 mb-6 shadow-sm border border-[#23272F] w-full">
               <h4 class="text-2xl font-medium text-white mb-3 text-center">{{ cveDetails.id }}</h4>
-              <p class="text-lg text-[#B0B3B8]">{{ cveDetails.description }}</p>
+              
+              <!-- Basic CVE Information -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                <div class="bg-dark-card rounded-lg p-4">
+                  <h5 class="text-sm font-medium text-text-secondary mb-2">Severity</h5>
+                  <p class="text-lg font-semibold" :class="{
+                    'text-error-text': cveDetails.severity === 'HIGH' || cveDetails.severity === 'CRITICAL',
+                    'text-[#F59E42]': cveDetails.severity === 'MEDIUM',
+                    'text-[#21C063]': cveDetails.severity === 'LOW'
+                  }">
+                    {{ cveDetails.severity || 'Not specified' }}
+                  </p>
+                </div>
+                <div class="bg-dark-card rounded-lg p-4">
+                  <h5 class="text-sm font-medium text-text-secondary mb-2">Published Date</h5>
+                  <p class="text-lg font-semibold text-text-primary">
+                    {{ cveDetails.publishedDate ? new Date(cveDetails.publishedDate).toLocaleDateString() : 'Not specified' }}
+                  </p>
+                </div>
+                <div class="bg-dark-card rounded-lg p-4">
+                  <h5 class="text-sm font-medium text-text-secondary mb-2">CVSS Score</h5>
+                  <p class="text-lg font-semibold" :class="{
+                    'text-error-text': cveDetails.cvssScore >= 7.0,
+                    'text-[#F59E42]': cveDetails.cvssScore >= 4.0 && cveDetails.cvssScore < 7.0,
+                    'text-[#21C063]': cveDetails.cvssScore < 4.0
+                  }">
+                    {{ cveDetails.cvssScore || 'Not specified' }}
+                  </p>
+                </div>
+                <div class="bg-dark-card rounded-lg p-4">
+                  <h5 class="text-sm font-medium text-text-secondary mb-2">Status</h5>
+                  <p class="text-lg font-semibold text-text-primary">
+                    {{ cveDetails.status || 'Not specified' }}
+                  </p>
+                </div>
+              </div>
+
+              <!-- Description -->
+              <div class="mb-6">
+                <h5 class="text-sm font-medium text-text-secondary mb-2">Description</h5>
+                <p class="text-lg text-text-secondary">{{ cveDetails.description }}</p>
+              </div>
+
+              <!-- Additional Information -->
+              <div v-if="cveDetails.affectedProducts" class="mb-6">
+                <h5 class="text-sm font-medium text-text-secondary mb-2">Affected Products</h5>
+                <p class="text-lg text-text-secondary">{{ cveDetails.affectedProducts }}</p>
+              </div>
             </div>
             <div class="flex flex-col items-center w-full">
               <button
@@ -259,9 +306,13 @@ const resetSearch = () => {
         </template>
       </template>
       <template v-else>
-        <div class="flex flex-col items-center justify-center py-16">
+        <div class="flex flex-col items-center justify-center py-16 bg-[#23272F] rounded-3xl shadow-2xl p-16 mb-12 border border-[#23272F]">
           <h2 class="text-2xl font-semibold text-white mb-4">You are not authenticated</h2>
-          <p class="text-[#B0B3B8] mb-6">Please <a href="/login" class="text-[#21C063] underline">log in</a> to use VulneraMetrics features.</p>
+          <p class="text-[#B0B3B8] mb-6">
+            Please
+            <RouterLink to="/login" class="text-[#21C063] underline hover:text-[#16994A]">log in</RouterLink>
+            to use VulneraMetrics features.
+          </p>
         </div>
       </template>
       </div>

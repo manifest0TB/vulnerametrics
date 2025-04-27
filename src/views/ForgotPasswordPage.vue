@@ -46,7 +46,7 @@ const handleForgotPassword = async () => {
 
   try {
     await authStore.forgotPassword(email.value);
-    // Si llegamos aquí, el proceso fue exitoso
+    // If we reach here, the process was successful
     router.push({
       name: 'ResetPassword',
       query: { email: email.value }
