@@ -6,7 +6,7 @@ import { apiService } from '@/services/api';
 import type { CveDetails, ApiError } from '@/types/api';
 import { getUrl } from 'aws-amplify/storage';
 import { useAuthStore } from '@/stores/auth';
-// import { useRouter } from 'vue-router';
+import { RouterLink } from 'vue-router';
 
 // Initialize stores
 const creditsStore = useCreditsStore();
@@ -161,11 +161,21 @@ const resetSearch = () => {
     <div v-if="authStore.isAuthenticated" class="flex items-center space-x-6">
       <span v-if="userName" class="text-white font-medium">Hi, {{ userName }}</span>
       <span v-if="creditsStore.credits !== null" class="text-[#21C063] font-semibold">Credits: {{ creditsStore.credits ?? 0 }}</span>
-      <button @click="handleLogout" class="bg-[#21C063] hover:bg-[#16994A] text-white px-4 py-2 rounded-lg shadow transition">Logout</button>
+      <button @click="handleLogout" class="bg-error-text hover:bg-error-text/80 text-white px-4 py-2 rounded-lg shadow transition">Logout</button>
     </div>
     <div v-else class="flex items-center space-x-4">
-      <a href="/login" class="text-white font-medium hover:underline">Login</a>
-      <a href="/register" class="text-[#21C063] font-medium hover:underline">Register</a>
+      <RouterLink
+        to="/login"
+        class="bg-primary hover:bg-primary-hover text-white px-4 py-2 rounded-lg shadow transition"
+      >
+        Login
+      </RouterLink>
+      <RouterLink
+        to="/register"
+        class="bg-dark-card hover:bg-dark-card/80 text-white px-4 py-2 rounded-lg shadow transition"
+      >
+        Register
+      </RouterLink>
     </div>
   </nav>
 
