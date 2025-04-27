@@ -36,23 +36,12 @@ const handleLogin = async () => {
 </script>
 
 <template>
-  <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
-    <div class="sm:mx-auto sm:w-full sm:max-w-md">
-      <h2
-        class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-800"
-      >
-        Sign in to your account
-      </h2>
-    </div>
-
-    <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-md">
+  <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 bg-[#161717]" style="font-family: 'Roboto', sans-serif;">
+    <div class="sm:mx-auto sm:w-full sm:max-w-md bg-[#23272F] rounded-2xl shadow-lg p-10">
+      <h2 class="text-center text-3xl font-bold text-white mb-6">Sign in to your account</h2>
       <form class="space-y-6" @submit.prevent="handleLogin">
         <div>
-          <label
-            for="email"
-            class="block text-sm font-medium leading-6 text-gray-700"
-            >Email address</label
-          >
+          <label for="email" class="block text-sm font-medium text-[#B0B3B8]">Email address</label>
           <div class="mt-2">
             <input
               id="email"
@@ -61,17 +50,12 @@ const handleLogin = async () => {
               v-model="email"
               autocomplete="email"
               required
-              class="block w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
+              class="block w-full rounded-md border-0 px-3 py-2 text-white bg-[#18181B] shadow-sm ring-1 ring-inset ring-[#23272F] placeholder:text-[#B0B3B8] focus:ring-2 focus:ring-inset focus:ring-[#21C063] sm:text-base"
             />
           </div>
         </div>
-
         <div>
-          <label
-            for="password"
-            class="block text-sm font-medium leading-6 text-gray-700"
-            >Password</label
-          >
+          <label for="password" class="block text-sm font-medium text-[#B0B3B8]">Password</label>
           <div class="relative mt-2">
             <input
               id="password"
@@ -80,53 +64,50 @@ const handleLogin = async () => {
               v-model="password"
               autocomplete="current-password"
               required
-              class="block w-full rounded-md border-0 px-3 py-1.5 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
+              class="block w-full rounded-md border-0 px-3 py-2 pr-10 text-white bg-[#18181B] shadow-sm ring-1 ring-inset ring-[#23272F] placeholder:text-[#B0B3B8] focus:ring-2 focus:ring-inset focus:ring-[#21C063] sm:text-base"
             />
             <button
               type="button"
               @click="togglePasswordVisibility"
-              class="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5 text-gray-500 hover:text-gray-700 focus:outline-none"
+              class="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5 text-[#B0B3B8] hover:text-[#21C063] focus:outline-none"
             >
               {{ isPasswordVisible ? 'Hide' : 'Show' }}
             </button>
           </div>
         </div>
-
         <div class="flex items-center justify-between">
           <RouterLink
             to="/forgot-password"
-            class="text-sm font-medium text-gray-600 hover:text-gray-800"
-            >Forgot your password?</RouterLink
+            class="text-sm font-medium text-[#B0B3B8] hover:text-[#21C063]"
           >
+            Forgot your password?
+          </RouterLink>
         </div>
-
-        <div v-if="errorMessage" class="text-center text-sm" :class="{
-          'text-red-600': !errorMessage.includes('successfully'),
-          'text-green-600': errorMessage.includes('successfully')
+        <div v-if="errorMessage" class="text-center text-sm mt-2" :class="{
+          'text-[#EF4444]': !errorMessage.includes('successfully'),
+          'text-[#21C063]': errorMessage.includes('successfully')
         }">
           {{ errorMessage }}
         </div>
-
         <div>
           <button
             type="submit"
             :disabled="isLoading"
-            class="flex w-full justify-center rounded-md bg-gray-700 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm transition-colors hover:bg-gray-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-700 disabled:cursor-not-allowed disabled:opacity-50"
+            class="flex w-full justify-center rounded-md bg-[#21C063] px-3 py-2 text-base font-semibold text-white shadow-sm transition-colors hover:bg-[#16994A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#21C063] disabled:cursor-not-allowed disabled:opacity-50"
             :class="{ 'animate-pulse': isLoading }"
           >
             {{ isLoading ? 'Signing in...' : 'Sign in' }}
           </button>
         </div>
       </form>
-
-      <p class="mt-10 text-center text-sm text-gray-500">
+      <p class="mt-10 text-center text-sm text-[#B0B3B8]">
         Not a member?
-        {{ ' ' }}
         <RouterLink
           to="/register"
-          class="font-semibold leading-6 text-gray-600 hover:text-gray-800"
-          >Register here</RouterLink
+          class="font-semibold text-[#21C063] hover:underline"
         >
+          Register here
+        </RouterLink>
       </p>
     </div>
   </div>

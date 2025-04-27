@@ -3,24 +3,24 @@
 </script>
 
 <template>
-  <div class="flex flex-col items-center justify-center px-4 py-8">
+  <div class="flex flex-col items-center justify-center px-4 py-8 bg-[#161717]" style="font-family: 'Roboto', sans-serif;">
     <div class="w-full max-w-4xl">
-      <h1 class="mb-8 text-center text-3xl font-semibold text-gray-700">
+      <h1 class="mb-8 text-center text-3xl font-semibold text-white">
         Terms of Service
       </h1>
 
-      <div class="space-y-6 text-gray-600">
-        <section class="rounded-lg bg-white p-6 shadow-sm">
-          <h2 class="mb-4 text-xl font-semibold text-gray-700">1. Acceptance of Terms</h2>
+      <div class="space-y-6 text-[#B0B3B8]">
+        <section class="rounded-lg bg-[#23272F] p-6 shadow-sm">
+          <h2 class="mb-4 text-xl font-semibold text-white">1. Acceptance of Terms</h2>
           <p class="mb-4">
             By accessing and using VulneraMetrics, you agree to be bound by these Terms of Service and all applicable laws and regulations. If you do not agree with any of these terms, you are prohibited from using or accessing this site.
           </p>
         </section>
 
-        <section class="rounded-lg bg-white p-6 shadow-sm">
-          <h2 class="mb-4 text-xl font-semibold text-gray-700">2. Use License</h2>
+        <section class="rounded-lg bg-[#23272F] p-6 shadow-sm">
+          <h2 class="mb-4 text-xl font-semibold text-white">2. Use License</h2>
           <p class="mb-4">
-            Permission is granted to temporarily access the materials on VulneraMetrics for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and under this license you may not:
+            Permission is granted to temporarily use VulneraMetrics for personal, non-commercial purposes. This is the grant of a license, not a transfer of title, and under this license you may not:
           </p>
           <ul class="list-inside list-disc space-y-2 pl-4">
             <li>Modify or copy the materials</li>
@@ -31,10 +31,10 @@
           </ul>
         </section>
 
-        <section class="rounded-lg bg-white p-6 shadow-sm">
-          <h2 class="mb-4 text-xl font-semibold text-gray-700">3. User Account</h2>
+        <section class="rounded-lg bg-[#23272F] p-6 shadow-sm">
+          <h2 class="mb-4 text-xl font-semibold text-white">3. User Account</h2>
           <p class="mb-4">
-            To access certain features of the service, you must register for an account. You agree to:
+            To access certain features of VulneraMetrics, you must register for an account. You agree to:
           </p>
           <ul class="list-inside list-disc space-y-2 pl-4">
             <li>Provide accurate and complete information</li>
@@ -44,62 +44,56 @@
           </ul>
         </section>
 
-        <section class="rounded-lg bg-white p-6 shadow-sm">
-          <h2 class="mb-4 text-xl font-semibold text-gray-700">4. Service Usage</h2>
+        <section class="rounded-lg bg-[#23272F] p-6 shadow-sm">
+          <h2 class="mb-4 text-xl font-semibold text-white">4. Service Usage</h2>
           <p class="mb-4">
-            When using our CVE analysis and reporting services:
+            VulneraMetrics provides vulnerability assessment and reporting services. You agree to:
           </p>
           <ul class="list-inside list-disc space-y-2 pl-4">
-            <li>You must provide valid CVE identifiers</li>
-            <li>Credits are required for generating AI-powered analysis reports</li>
-            <li>Reports are for your personal or organizational use only</li>
-            <li>You may not redistribute or resell the reports</li>
+            <li>Use the service only for legitimate security assessments</li>
+            <li>Not attempt to bypass any security measures</li>
+            <li>Not use the service for malicious purposes</li>
+            <li>Comply with all applicable laws and regulations</li>
           </ul>
         </section>
 
-        <section class="rounded-lg bg-white p-6 shadow-sm">
-          <h2 class="mb-4 text-xl font-semibold text-gray-700">5. Intellectual Property</h2>
+        <section class="rounded-lg bg-[#23272F] p-6 shadow-sm">
+          <h2 class="mb-4 text-xl font-semibold text-white">5. Disclaimer</h2>
           <p class="mb-4">
-            The content, organization, graphics, design, and other matters related to the site are protected by applicable copyrights and other proprietary rights. The copying, redistribution, or publication of any part of the site is prohibited without prior written consent.
+            The materials on VulneraMetrics are provided on an 'as is' basis. We make no warranties, expressed or implied, and hereby disclaim and negate all other warranties including, without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights.
           </p>
         </section>
 
-        <section class="rounded-lg bg-white p-6 shadow-sm">
-          <h2 class="mb-4 text-xl font-semibold text-gray-700">6. Disclaimer</h2>
-          <p class="mb-4">
-            The materials on VulneraMetrics are provided on an 'as is' basis. We make no warranties, expressed or implied, and hereby disclaim and negate all other warranties including, without limitation:
-          </p>
-          <ul class="list-inside list-disc space-y-2 pl-4">
-            <li>Implied warranties of merchantability</li>
-            <li>Fitness for a particular purpose</li>
-            <li>Non-infringement of intellectual property</li>
-            <li>Accuracy of the information provided</li>
-          </ul>
-        </section>
-
-        <section class="rounded-lg bg-white p-6 shadow-sm">
-          <h2 class="mb-4 text-xl font-semibold text-gray-700">7. Limitations</h2>
+        <section class="rounded-lg bg-[#23272F] p-6 shadow-sm">
+          <h2 class="mb-4 text-xl font-semibold text-white">6. Limitations</h2>
           <p class="mb-4">
             In no event shall VulneraMetrics or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on VulneraMetrics.
           </p>
         </section>
 
-        <section class="rounded-lg bg-white p-6 shadow-sm">
-          <h2 class="mb-4 text-xl font-semibold text-gray-700">8. Contact Information</h2>
+        <section class="rounded-lg bg-[#23272F] p-6 shadow-sm">
+          <h2 class="mb-4 text-xl font-semibold text-white">7. Revisions and Errata</h2>
+          <p class="mb-4">
+            The materials appearing on VulneraMetrics could include technical, typographical, or photographic errors. We do not warrant that any of the materials on our website are accurate, complete, or current. We may make changes to the materials contained on our website at any time without notice.
+          </p>
+        </section>
+
+        <section class="rounded-lg bg-[#23272F] p-6 shadow-sm">
+          <h2 class="mb-4 text-xl font-semibold text-white">8. Contact Information</h2>
           <p class="mb-4">
             If you have any questions about these Terms of Service, please contact us at:
           </p>
-          <p class="text-gray-700">
+          <p class="text-[#21C063]">
             Email: contact@vulnerametrics.com
           </p>
         </section>
 
-        <section class="rounded-lg bg-white p-6 shadow-sm">
-          <h2 class="mb-4 text-xl font-semibold text-gray-700">9. Changes to Terms</h2>
+        <section class="rounded-lg bg-[#23272F] p-6 shadow-sm">
+          <h2 class="mb-4 text-xl font-semibold text-white">9. Updates to Terms</h2>
           <p class="mb-4">
-            We reserve the right to modify these terms at any time. We will notify users of any material changes by posting the new Terms of Service on this page and updating the "Last Updated" date.
+            We may update these Terms of Service from time to time. We will notify you of any changes by posting the new Terms of Service on this page and updating the "Last Updated" date.
           </p>
-          <p class="text-sm text-gray-500">
+          <p class="text-sm text-[#B0B3B8]">
             Last Updated: April 2025
           </p>
         </section>

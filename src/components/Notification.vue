@@ -4,14 +4,14 @@
       v-if="show"
       :class="[
         'fixed top-4 right-4 p-4 rounded-lg shadow-lg max-w-md z-50',
-        type === 'error' ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'
+        type === 'error' ? 'bg-error-bg border border-error-border text-error-text' : 'bg-success-bg border border-success-border text-success-text'
       ]"
     >
       <div class="flex items-center">
         <div class="flex-shrink-0">
           <svg
             v-if="type === 'error'"
-            class="h-5 w-5 text-red-400"
+            class="h-5 w-5 text-error-text"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
             fill="currentColor"
@@ -24,7 +24,7 @@
           </svg>
           <svg
             v-else
-            class="h-5 w-5 text-green-400"
+            class="h-5 w-5 text-success-text"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
             fill="currentColor"
@@ -46,8 +46,8 @@
               class="inline-flex rounded-md p-1.5 focus:outline-none focus:ring-2 focus:ring-offset-2"
               :class="[
                 type === 'error'
-                  ? 'bg-red-100 text-red-500 hover:bg-red-200 focus:ring-red-600'
-                  : 'bg-green-100 text-green-500 hover:bg-green-200 focus:ring-green-600'
+                  ? 'bg-error-bg text-error-text hover:bg-error-bg/80 focus:ring-error-text'
+                  : 'bg-success-bg text-success-text hover:bg-success-bg/80 focus:ring-success-text'
               ]"
             >
               <span class="sr-only">Dismiss</span>

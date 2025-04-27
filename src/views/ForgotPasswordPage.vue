@@ -58,22 +58,15 @@ const handleForgotPassword = async () => {
 </script>
 
 <template>
-  <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
-    <div class="sm:mx-auto sm:w-full sm:max-w-md">
-      <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-800">
-        Reset your password
-      </h2>
-      <p class="mt-2 text-center text-sm text-gray-600">
+  <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 bg-[#161717]" style="font-family: 'Roboto', sans-serif;">
+    <div class="sm:mx-auto sm:w-full sm:max-w-md bg-[#23272F] rounded-2xl shadow-lg p-10">
+      <h2 class="text-center text-3xl font-bold text-white mb-4">Reset your password</h2>
+      <p class="text-center text-sm text-[#B0B3B8] mb-8">
         Enter your email address and we'll send you a code to reset your password.
       </p>
-    </div>
-
-    <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-md">
       <form class="space-y-6" @submit.prevent="handleForgotPassword">
         <div>
-          <label for="email" class="block text-sm font-medium leading-6 text-gray-700">
-            Email address
-          </label>
+          <label for="email" class="block text-sm font-medium text-[#B0B3B8]">Email address</label>
           <div class="mt-2">
             <input
               id="email"
@@ -84,40 +77,36 @@ const handleForgotPassword = async () => {
               required
               maxlength="254"
               :pattern="emailPattern"
-              class="block w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
+              class="block w-full rounded-md border-0 px-3 py-2 text-white bg-[#18181B] shadow-sm ring-1 ring-inset ring-[#23272F] placeholder:text-[#B0B3B8] focus:ring-2 focus:ring-inset focus:ring-[#21C063] sm:text-base"
             />
           </div>
           <!-- Validation error message -->
-          <p v-if="validationError" class="mt-2 text-sm text-red-600">
+          <p v-if="validationError" class="mt-2 text-sm text-[#EF4444]">
             {{ validationError }}
           </p>
         </div>
-
         <div v-if="errorMessage" class="text-center text-sm" :class="{
-          'text-red-600': !errorMessage.includes('If an account exists'),
-          'text-blue-600': errorMessage.includes('If an account exists')
+          'text-[#EF4444]': !errorMessage.includes('If an account exists'),
+          'text-[#38BDF8]': errorMessage.includes('If an account exists')
         }">
           {{ errorMessage }}
         </div>
-
         <div>
           <button
             type="submit"
             :disabled="isLoading"
-            class="flex w-full justify-center rounded-md bg-gray-700 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm transition-colors hover:bg-gray-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-700 disabled:cursor-not-allowed disabled:opacity-50"
+            class="flex w-full justify-center rounded-md bg-[#21C063] px-3 py-2 text-base font-semibold text-white shadow-sm transition-colors hover:bg-[#16994A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#21C063] disabled:cursor-not-allowed disabled:opacity-50"
             :class="{ 'animate-pulse': isLoading }"
           >
             {{ isLoading ? 'Sending...' : 'Send Reset Code' }}
           </button>
         </div>
       </form>
-
-      <p class="mt-10 text-center text-sm text-gray-500">
+      <p class="mt-10 text-center text-sm text-[#B0B3B8]">
         Remember your password?
-        {{ ' ' }}
         <RouterLink
           to="/login"
-          class="font-semibold leading-6 text-gray-600 hover:text-gray-800"
+          class="font-semibold text-[#21C063] hover:underline"
         >
           Back to Sign In
         </RouterLink>

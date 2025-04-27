@@ -141,14 +141,32 @@ export const useAuthStore = defineStore('auth', {
       }
     },
 
-    async forgotPassword(username: string): Promise<void> {
+    async forgotPassword(email: string) {
       this.loading = true;
       this.error = null;
       try {
-        await resetPassword({ username });
+        await resetPassword({ username: email });
+        this.error = 'If an account exists with this email, you will receive a verification code.';
       } catch (error) {
-        console.error('Forgot password error:', error);
-        this.error = error instanceof Error ? error.message : 'Password reset request failed';
+        console.error('Error in forgot password:', error);
+        this.error = 'Failed to send verification code. Please try again.';
+        throw error;
+      } finally {
+        this.loading = false;
+      }
+    },
+
+    async confirmSignUp(username: string, code: string) {
+      this.loading = true;
+      this.error = null;
+      try {
+        await confirmSignUp({
+          username,
+          confirmationCode: code
+        });
+      } catch (error) {
+        console.error('Error in confirm sign up:', error);
+        this.error = 'Failed to confirm account. Please try again.';
         throw error;
       } finally {
         this.loading = false;

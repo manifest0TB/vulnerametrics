@@ -112,87 +112,79 @@ const handleRegister = async () => {
 </script>
 
 <template>
-  <div class="flex min-h-full flex-col px-6 py-8 lg:px-8">
-    <div class="sm:mx-auto sm:w-full sm:max-w-md">
-      <h2 class="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-800">
-        Create your account
-      </h2>
-    </div>
-
-    <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-md">
+  <div class="flex min-h-full flex-col px-6 py-8 lg:px-8 bg-[#161717]" style="font-family: 'Roboto', sans-serif;">
+    <div class="sm:mx-auto sm:w-full sm:max-w-md bg-[#23272F] rounded-2xl shadow-lg p-10">
+      <h2 class="text-center text-3xl font-bold text-white mb-6">Create your account</h2>
       <form class="space-y-6" @submit.prevent="handleRegister">
         <div>
-          <label for="nickname" class="block text-sm font-medium leading-6 text-gray-700">Nickname</label>
+          <label for="nickname" class="block text-sm font-medium text-[#B0B3B8]">Nickname</label>
           <div class="mt-2">
-            <input 
-              id="nickname" 
-              name="nickname" 
-              type="text" 
-              v-model="nickname" 
+            <input
+              id="nickname"
+              name="nickname"
+              type="text"
+              v-model="nickname"
               required
               minlength="4"
               maxlength="20"
               pattern="[a-zA-Z0-9_-]*"
-              class="block w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6" 
+              class="block w-full rounded-md border-0 px-3 py-2 text-white bg-[#18181B] shadow-sm ring-1 ring-inset ring-[#23272F] placeholder:text-[#B0B3B8] focus:ring-2 focus:ring-inset focus:ring-[#21C063] sm:text-base"
             />
           </div>
-          <p v-if="validationErrors.nickname" class="mt-2 text-sm text-red-600">
+          <p v-if="validationErrors.nickname" class="mt-2 text-sm text-[#EF4444]">
             {{ validationErrors.nickname }}
           </p>
-          <p class="mt-1 text-xs text-gray-500">
+          <p class="mt-1 text-xs text-[#B0B3B8]">
             Nickname must be between 4 and 20 characters and can only contain letters, numbers, underscores, and hyphens.
           </p>
         </div>
-
         <div>
-          <label for="email" class="block text-sm font-medium leading-6 text-gray-700">Email address</label>
+          <label for="email" class="block text-sm font-medium text-[#B0B3B8]">Email address</label>
           <div class="mt-2">
-            <input 
-              id="email" 
-              name="email" 
-              type="email" 
-              v-model="email" 
-              autocomplete="email" 
+            <input
+              id="email"
+              name="email"
+              type="email"
+              v-model="email"
+              autocomplete="email"
               required
               maxlength="254"
               :pattern="emailPattern"
-              class="block w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6" 
+              class="block w-full rounded-md border-0 px-3 py-2 text-white bg-[#18181B] shadow-sm ring-1 ring-inset ring-[#23272F] placeholder:text-[#B0B3B8] focus:ring-2 focus:ring-inset focus:ring-[#21C063] sm:text-base"
             />
           </div>
-          <p v-if="validationErrors.email" class="mt-2 text-sm text-red-600">
+          <p v-if="validationErrors.email" class="mt-2 text-sm text-[#EF4444]">
             {{ validationErrors.email }}
           </p>
         </div>
-
         <div>
-          <label for="password" class="block text-sm font-medium leading-6 text-gray-700">Password</label>
+          <label for="password" class="block text-sm font-medium text-[#B0B3B8]">Password</label>
           <div class="relative mt-2">
-            <input 
-              id="password" 
-              name="password" 
-              :type="isPasswordVisible ? 'text' : 'password'" 
-              v-model="password" 
+            <input
+              id="password"
+              name="password"
+              :type="isPasswordVisible ? 'text' : 'password'"
+              v-model="password"
               required
               maxlength="256"
               pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).{8,}$"
-              class="block w-full rounded-md border-0 px-3 py-1.5 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6" 
+              class="block w-full rounded-md border-0 px-3 py-2 pr-10 text-white bg-[#18181B] shadow-sm ring-1 ring-inset ring-[#23272F] placeholder:text-[#B0B3B8] focus:ring-2 focus:ring-inset focus:ring-[#21C063] sm:text-base"
             />
             <button
               type="button"
               @click="togglePasswordVisibility"
-              class="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5 text-gray-500 hover:text-gray-700 focus:outline-none"
+              class="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5 text-[#B0B3B8] hover:text-[#21C063] focus:outline-none"
             >
               {{ isPasswordVisible ? 'Hide' : 'Show' }}
             </button>
           </div>
-          <p v-if="validationErrors.password" class="mt-2 text-sm text-red-600">
+          <p v-if="validationErrors.password" class="mt-2 text-sm text-[#EF4444]">
             {{ validationErrors.password }}
           </p>
         </div>
-
         <div class="mt-2 space-y-1">
-          <p class="text-sm font-medium text-gray-700">Password requirements:</p>
-          <ul class="text-xs text-gray-600 space-y-1">
+          <p class="text-sm font-medium text-[#B0B3B8]">Password requirements:</p>
+          <ul class="text-xs text-[#B0B3B8] space-y-1">
             <li>At least 8 characters long</li>
             <li>Contains at least 1 number</li>
             <li>Contains at least 1 lowercase letter</li>
@@ -200,76 +192,60 @@ const handleRegister = async () => {
             <li>Contains at least 1 special character</li>
           </ul>
         </div>
-
         <div>
-          <label for="confirm-password" class="block text-sm font-medium leading-6 text-gray-700">Confirm Password</label>
-          <div class="relative mt-2">
-             <input id="confirm-password" name="confirm-password" :type="isPasswordVisible ? 'text' : 'password'" v-model="confirmPassword" autocomplete="new-password" required class="block w-full rounded-md border-0 px-3 py-1.5 pr-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6" />
-             <button type="button" @click="togglePasswordVisibility" class="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5 text-gray-500 hover:text-gray-700 focus:outline-none" aria-label="Toggle password visibility">{{ isPasswordVisible ? 'Hide' : 'Show' }}</button>
+          <label for="confirmPassword" class="block text-sm font-medium text-[#B0B3B8]">Confirm Password</label>
+          <div class="mt-2">
+            <input
+              id="confirmPassword"
+              name="confirmPassword"
+              :type="isPasswordVisible ? 'text' : 'password'"
+              v-model="confirmPassword"
+              required
+              maxlength="256"
+              class="block w-full rounded-md border-0 px-3 py-2 text-white bg-[#18181B] shadow-sm ring-1 ring-inset ring-[#23272F] placeholder:text-[#B0B3B8] focus:ring-2 focus:ring-inset focus:ring-[#21C063] sm:text-base"
+            />
           </div>
-           <p v-if="passwordMismatch" class="mt-2 text-sm text-red-600">Passwords do not match.</p>
-        </div>
-
-        <!-- Terms and Privacy Policy Acceptance -->
-        <div class="space-y-4">
-          <div class="flex items-start">
-            <div class="flex h-6 items-center">
-              <input
-                id="terms"
-                name="terms"
-                type="checkbox"
-                v-model="acceptTerms"
-                required
-                class="h-4 w-4 rounded border-gray-300 text-gray-700 focus:ring-gray-600"
-              />
-            </div>
-            <div class="ml-3 text-sm leading-6">
-              <label for="terms" class="font-medium text-gray-700">
-                I accept the
-                <RouterLink to="/terms" class="text-gray-600 hover:text-gray-800 underline">Terms of Service</RouterLink>
-              </label>
-            </div>
-          </div>
-
-          <div class="flex items-start">
-            <div class="flex h-6 items-center">
-              <input
-                id="privacy"
-                name="privacy"
-                type="checkbox"
-                v-model="acceptPrivacy"
-                required
-                class="h-4 w-4 rounded border-gray-300 text-gray-700 focus:ring-gray-600"
-              />
-            </div>
-            <div class="ml-3 text-sm leading-6">
-              <label for="privacy" class="font-medium text-gray-700">
-                I accept the
-                <RouterLink to="/privacy" class="text-gray-600 hover:text-gray-800 underline">Privacy Policy</RouterLink>
-              </label>
-            </div>
-          </div>
-
-          <p v-if="validationErrors.terms" class="mt-2 text-sm text-red-600">
-            {{ validationErrors.terms }}
+          <p v-if="passwordMismatch" class="mt-2 text-sm text-[#EF4444]">
+            Passwords do not match
           </p>
         </div>
-
-        <div v-if="errorMessage && !passwordMismatch" class="text-center text-sm text-red-600">
+        <div class="flex items-center space-x-4 mt-4">
+          <label class="flex items-center text-sm text-[#B0B3B8]">
+            <input type="checkbox" v-model="acceptTerms" required class="mr-2 accent-[#21C063]" />
+            I accept the
+            <RouterLink to="/terms" class="underline hover:text-[#21C063] ml-1">Terms of Service</RouterLink>
+          </label>
+          <label class="flex items-center text-sm text-[#B0B3B8]">
+            <input type="checkbox" v-model="acceptPrivacy" required class="mr-2 accent-[#21C063]" />
+            I accept the
+            <RouterLink to="/privacy" class="underline hover:text-[#21C063] ml-1">Privacy Policy</RouterLink>
+          </label>
+        </div>
+        <p v-if="validationErrors.terms" class="mt-2 text-sm text-[#EF4444]">
+          {{ validationErrors.terms }}
+        </p>
+        <div v-if="errorMessage && !passwordMismatch" class="text-center text-sm text-[#EF4444]">
           {{ errorMessage }}
         </div>
-
         <div>
-          <button type="submit" :disabled="isLoading" class="flex w-full justify-center rounded-md bg-gray-700 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm transition-colors hover:bg-gray-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-700 disabled:cursor-not-allowed disabled:opacity-50" :class="{ 'animate-pulse': isLoading }">
-            {{ isLoading ? 'Registering...' : 'Create Account' }}
+          <button
+            type="submit"
+            :disabled="isLoading"
+            class="flex w-full justify-center rounded-md bg-[#21C063] px-3 py-2 text-base font-semibold text-white shadow-sm transition-colors hover:bg-[#16994A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#21C063] disabled:cursor-not-allowed disabled:opacity-50"
+            :class="{ 'animate-pulse': isLoading }"
+          >
+            {{ isLoading ? 'Registering...' : 'Register' }}
           </button>
         </div>
       </form>
-
-      <p class="mt-10 text-center text-sm text-gray-500">
+      <p class="mt-10 text-center text-sm text-[#B0B3B8]">
         Already have an account?
-        {{ ' ' }}
-        <RouterLink to="/login" class="font-semibold leading-6 text-gray-600 hover:text-gray-800">Sign In</RouterLink>
+        <RouterLink
+          to="/login"
+          class="font-semibold text-[#21C063] hover:underline"
+        >
+          Sign in here
+        </RouterLink>
       </p>
     </div>
   </div>

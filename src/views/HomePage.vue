@@ -156,7 +156,7 @@ const resetSearch = () => {
   <!-- NAVBAR -->
   <nav class="fixed top-0 left-0 w-full bg-[#161717] shadow z-50 flex items-center justify-between px-8 h-16" style="font-family: 'Roboto', sans-serif;">
     <a href="/" class="flex items-center">
-      <img src="@/assets/logo-bw-50.png" alt="Logo" style="height:48px; width:auto; max-width:120px; display:block;" />
+      <img src="@/assets/vmlogo_white.svg" alt="VulneraMetrics Logo" class="h-12 w-auto" />
     </a>
     <div v-if="authStore.isAuthenticated" class="flex items-center space-x-6">
       <span v-if="userName" class="text-white font-medium">Hi, {{ userName }}</span>
@@ -179,22 +179,22 @@ const resetSearch = () => {
         </template>
         <template v-if="!cveDetails">
           <form class="flex flex-col sm:flex-row items-center justify-center w-full gap-4 mb-6" @submit.prevent="handleSearch">
-            <input
-              type="text"
-              v-model="cveIdInput"
+      <input
+        type="text"
+        v-model="cveIdInput"
               placeholder="CVE-2024-1234"
               class="flex-grow rounded-xl border border-[#23272F] px-6 py-4 text-2xl text-white bg-[#18181B] focus:ring-2 focus:ring-[#21C063] focus:outline-none transition w-full sm:w-auto placeholder-[#B0B3B8]"
               :disabled="!authStore.isAuthenticated"
-            />
-            <button
-              type="submit"
+      />
+      <button
+        type="submit"
               :disabled="isLoading || !isValidCveFormat(cveIdInput) || !authStore.isAuthenticated"
               class="bg-[#21C063] hover:bg-[#16994A] text-white px-10 py-4 rounded-xl shadow-lg text-xl font-semibold transition disabled:cursor-not-allowed disabled:opacity-50"
-              :class="{ 'animate-pulse': isLoading }"
-            >
-              {{ isLoading ? 'Searching...' : 'Search' }}
-            </button>
-          </form>
+        :class="{ 'animate-pulse': isLoading }"
+      >
+        {{ isLoading ? 'Searching...' : 'Search' }}
+      </button>
+    </form>
         </template>
         <div v-if="error" class="bg-[#2D1B1B] border border-[#EF4444] text-[#EF4444] rounded-lg p-3 mb-4 flex items-center space-x-2">
           <svg class="w-5 h-5 text-[#EF4444]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
@@ -216,27 +216,27 @@ const resetSearch = () => {
             <div class="bg-[#18181B] rounded-xl p-8 mb-6 shadow-sm border border-[#23272F] w-full">
               <h4 class="text-2xl font-medium text-white mb-3">{{ cveDetails.id }}</h4>
               <p class="text-lg text-[#B0B3B8]">{{ cveDetails.description }}</p>
-            </div>
+          </div>
             <div class="flex flex-col items-center w-full">
-              <button
-                v-if="!reportUrl"
-                @click="handleGenerateReport"
+            <button
+              v-if="!reportUrl"
+              @click="handleGenerateReport"
                 :disabled="!canGenerateReport || isGeneratingReport || !authStore.isAuthenticated"
                 class="bg-[#21C063] hover:bg-[#16994A] text-white px-10 py-4 rounded-xl shadow-lg text-xl font-semibold transition disabled:cursor-not-allowed disabled:opacity-50 mb-4"
-                :class="{ 'animate-pulse': isGeneratingReport }"
-              >
-                {{ isGeneratingReport ? 'Generating...' : 'Generate Report' }}
-              </button>
-              <a
-                v-else
-                :href="reportUrl"
+              :class="{ 'animate-pulse': isGeneratingReport }"
+            >
+              {{ isGeneratingReport ? 'Generating...' : 'Generate Report' }}
+            </button>
+            <a
+              v-else
+              :href="reportUrl"
                 target="_blank"
                 rel="noopener"
-                download="vulnerability-report.pdf"
+              download="vulnerability-report.pdf"
                 class="bg-[#21C063] hover:bg-[#16994A] text-white px-10 py-4 rounded-xl shadow-lg text-xl font-semibold transition mb-4"
-              >
-                Download Report
-              </a>
+            >
+              Download Report
+            </a>
               <button
                 v-if="reportUrl"
                 @click="resetSearch"
@@ -254,7 +254,7 @@ const resetSearch = () => {
           <p class="text-[#B0B3B8] mb-6">Please <a href="/login" class="text-[#21C063] underline">log in</a> to use VulneraMetrics features.</p>
         </div>
       </template>
-    </div>
+      </div>
     <!-- Enlaces legales debajo del cuadro principal -->
     <div class="flex justify-center space-x-6 mt-8">
       <a href="/privacy" class="text-[#B0B3B8] underline hover:text-[#21C063] transition">Privacy Policy</a>
