@@ -17,6 +17,7 @@ import ResetPasswordPage from '@/views/ResetPasswordPage.vue'
 import NotFoundPage from '@/views/NotFoundPage.vue'
 import PrivacyPolicyPage from '@/views/PrivacyPolicyPage.vue'
 import TermsOfServicePage from '@/views/TermsOfServicePage.vue'
+import GenerateReports from '@/views/GenerateReports.vue'
 
 // Define application routes
 const routes: Array<RouteRecordRaw> = [
@@ -24,7 +25,7 @@ const routes: Array<RouteRecordRaw> = [
     path: '/',
     name: 'Home',
     component: HomePage,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: false }
   },
   {
     path: '/login',
@@ -65,6 +66,12 @@ const routes: Array<RouteRecordRaw> = [
     path: '/terms-of-service',
     name: 'TermsOfService',
     component: TermsOfServicePage,
+  },
+  {
+    path: '/generate-reports',
+    name: 'GenerateReports',
+    component: GenerateReports,
+    meta: { requiresAuth: true }
   },
   {
     // Catch-all route for 404 Not Found pages
