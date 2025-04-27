@@ -82,72 +82,58 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="flex flex-col items-center justify-center px-4 py-8">
-    <h1 class="mb-6 text-center text-3xl font-semibold text-gray-700">
-      Search CVE Information
-    </h1>
+  <!-- NAVBAR -->
+  <nav class="fixed top-0 left-0 w-full bg-white shadow z-50 flex items-center justify-between px-8 h-16" style="font-family: 'Roboto', sans-serif;">
+    <div class="flex items-center space-x-3">
+      <img src="/logo.svg" alt="Logo" class="h-8 w-8" />
+      <span class="text-xl font-bold text-gray-800 tracking-tight">VulneraMetrics</span>
+    </div>
+    <div class="flex items-center space-x-6">
+      <span class="text-gray-600 font-medium transition">Credits: {{ creditsStore.credits ?? 0 }}</span>
+      <a href="/" class="text-gray-600 hover:text-gray-900 font-medium transition">Home</a>
+      <a href="/profile" class="text-gray-600 hover:text-gray-900 font-medium transition">Profile</a>
+      <button class="bg-gray-800 text-white px-4 py-2 rounded-lg shadow hover:bg-gray-700 transition">Logout</button>
+    </div>
+  </nav>
 
-    <p class="mb-8 max-w-xl text-center text-gray-600">
-      Enter a CVE ID (e.g., CVE-2024-1234) to retrieve its details and generate
-      an AI-powered analysis report (requires credits).
-    </p>
-
-    <form
-      @submit.prevent="handleSearch"
-      class="mb-8 flex w-full max-w-lg items-center space-x-2 rounded-md border border-gray-300 bg-white p-2 shadow-sm"
-    >
-      <input
-        type="text"
-        v-model="cveIdInput"
-        placeholder="Enter CVE ID (e.g., CVE-2024-1234)"
-        class="flex-grow rounded-l-md border-none px-4 py-2 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-0"
-        aria-label="CVE ID Input"
-        required
-      />
-      <button
-        type="submit"
-        :disabled="isLoading || !isValidCveFormat(cveIdInput)"
-        class="rounded-r-md bg-gray-700 px-6 py-2 text-white transition-colors hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
-        :class="{ 'animate-pulse': isLoading }"
-      >
-        {{ isLoading ? 'Searching...' : 'Search' }}
-      </button>
-    </form>
-
-    <div class="w-full max-w-2xl">
-      <!-- Error Message -->
-      <div
-        v-if="error"
-        class="mb-4 rounded-md border border-red-200 bg-red-50 p-4 text-red-600"
-      >
-        {{ error }}
+  <!-- MAIN CONTENT -->
+  <div class="pt-24 flex flex-col items-center min-h-screen bg-gray-50" style="font-family: 'Roboto', sans-serif;">
+    <div class="w-full max-w-2xl bg-white rounded-2xl shadow-lg p-10 mb-8">
+      <h2 class="text-2xl font-semibold text-gray-800 mb-2">Search CVE</h2>
+      <p class="text-gray-500 mb-6">Enter a CVE ID (e.g., CVE-2024-1234) to view its details and generate an AI-powered report.</p>
+      <form class="flex space-x-2 mb-4" @submit.prevent="handleSearch">
+        <input
+          type="text"
+          v-model="cveIdInput"
+          placeholder="CVE-2024-1234"
+          class="flex-grow rounded-lg border border-gray-300 px-4 py-2 text-gray-700 focus:ring-2 focus:ring-gray-400 focus:outline-none transition"
+        />
+        <button
+          type="submit"
+          :disabled="isLoading || !isValidCveFormat(cveIdInput)"
+          class="bg-gray-800 text-white px-6 py-2 rounded-lg shadow hover:bg-gray-700 transition disabled:cursor-not-allowed disabled:opacity-50"
+          :class="{ 'animate-pulse': isLoading }"
+        >
+          {{ isLoading ? 'Searching...' : 'Search' }}
+        </button>
+      </form>
+      <div v-if="error" class="bg-red-50 border border-red-200 text-red-600 rounded-lg p-3 mb-4 flex items-center space-x-2">
+        <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        <span>{{ error }}</span>
       </div>
-
-      <!-- CVE Details -->
-      <div
-        v-if="cveDetails"
-        class="mb-6 rounded-lg border border-gray-200 bg-white p-6 shadow-sm"
-      >
-        <h2 class="mb-4 text-xl font-semibold text-gray-800">
-          {{ cveDetails.id }}
-        </h2>
-        <div class="prose prose-sm max-w-none">
+      <div v-if="cveDetails" class="mt-6">
+        <div class="bg-gray-100 rounded-xl p-6 mb-4 shadow-sm">
+          <h3 class="text-lg font-medium text-gray-800 mb-2">{{ cveDetails.id }}</h3>
           <p class="text-gray-600">{{ cveDetails.description }}</p>
-          <!-- Add more CVE details as needed -->
         </div>
-
-        <!-- Report Generation Section -->
-        <div class="mt-6 flex items-center justify-between border-t border-gray-100 pt-4">
-          <div class="flex items-center space-x-2">
-            <span class="text-sm text-gray-500">Available Credits: {{ creditsStore.credits ?? 0 }}</span>
-            <span v-if="!hasEnoughCredits" class="text-sm text-red-500">(Insufficient credits)</span>
-          </div>
+        <div class="flex items-center justify-between">
+          <span class="text-sm text-gray-500">Available Credits: {{ creditsStore.credits ?? 0 }}</span>
           <div class="flex items-center space-x-4">
             <button
               v-if="!reportUrl"
               @click="handleGenerateReport"
               :disabled="!canGenerateReport || isGeneratingReport"
-              class="rounded bg-gray-700 px-4 py-2 text-sm text-white transition-colors hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+              class="bg-gray-700 text-white px-4 py-2 rounded-lg shadow hover:bg-gray-600 transition disabled:cursor-not-allowed disabled:opacity-50"
               :class="{ 'animate-pulse': isGeneratingReport }"
             >
               {{ isGeneratingReport ? 'Generating...' : 'Generate Report' }}
@@ -158,22 +144,18 @@ onUnmounted(() => {
               target="_blank"
               rel="noopener"
               download="vulnerability-report.pdf"
-              class="rounded bg-green-600 px-4 py-2 text-sm text-white transition-colors hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-1"
+              class="bg-green-600 text-white px-4 py-2 rounded-lg shadow hover:bg-green-500 transition"
             >
               Download Report
             </a>
           </div>
         </div>
       </div>
-
-      <!-- Loading State -->
-      <div
-        v-if="isLoading"
-        class="flex items-center justify-center space-x-2 text-gray-500"
-      >
-        <span class="text-sm">Loading details...</span>
-      </div>
     </div>
+    <!-- FOOTER -->
+    <footer class="w-full text-center text-gray-400 py-6 text-sm">
+      © 2024 VulneraMetrics. All rights reserved.
+    </footer>
   </div>
 </template>
 
