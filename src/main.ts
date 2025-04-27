@@ -45,6 +45,12 @@ const amplifyConfig = {
         region: 'us-east-1'
       }
     }
+  },
+  Storage: {
+    S3: {
+      bucket: import.meta.env.VITE_S3_REPORT_BUCKET as string,
+      region: 'us-east-1',
+    }
   }
 }
 
