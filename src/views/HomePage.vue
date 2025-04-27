@@ -5,9 +5,11 @@ import { useCreditsStore } from '@/stores/credits';
 import { apiService } from '@/services/api';
 import type { CveDetails, ApiError } from '@/types/api';
 import { getUrl } from 'aws-amplify/storage';
+import { useAuthStore } from '@/stores/auth';
 
 // Initialize stores
 const creditsStore = useCreditsStore();
+const authStore = useAuthStore();
 
 // Local state
 const cveIdInput = ref('');
@@ -20,6 +22,16 @@ const reportUrl = ref<string | null>(null);
 // Computed properties
 const hasEnoughCredits = computed(() => (creditsStore.credits ?? 0) > 0);
 const canGenerateReport = computed(() => cveDetails.value && hasEnoughCredits.value);
+
+const userName = computed(() => {
+  // Intenta obtener el nickname, si no, el username
+  return (
+    authStore.userAttributes?.nickname ||
+    authStore.userAttributes?.email ||
+    authStore.user?.username ||
+    'User'
+  );
+});
 
 // Validation function for CVE ID format
 const isValidCveFormat = (cveId: string): boolean => {
@@ -73,6 +85,11 @@ const handleGenerateReport = async () => {
   }
 };
 
+const handleLogout = async () => {
+  await authStore.logout();
+  // Puedes redirigir si lo deseas
+};
+
 // Clean up the blob URL when component is unmounted
 onUnmounted(() => {
   if (reportUrl.value) {
@@ -83,8 +100,15 @@ onUnmounted(() => {
 
 <template>
   <!-- NAVBAR -->
-  <nav class="fixed top-0 left-0 w-full bg-white shadow z-50 flex items-center justify-center px-8 h-16" style="font-family: 'Roboto', sans-serif;">
-    <img src="@/assets/logo-bw-50.png" alt="Logo" class="h-10 w-10" />
+  <nav class="fixed top-0 left-0 w-full bg-white shadow z-50 flex items-center justify-between px-8 h-16" style="font-family: 'Roboto', sans-serif;">
+    <div class="flex items-center space-x-3">
+      <img src="@/assets/logo-bw-50.png" alt="Logo" class="h-10 w-10" />
+    </div>
+    <div class="flex items-center space-x-6">
+      <span class="text-gray-700 font-medium">Hi, {{ userName }}</span>
+      <span class="text-green-500 font-semibold">Credits: {{ creditsStore.credits ?? 0 }}</span>
+      <button @click="handleLogout" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg shadow transition">Logout</button>
+    </div>
   </nav>
 
   <!-- MAIN CONTENT -->
