@@ -83,17 +83,8 @@ onUnmounted(() => {
 
 <template>
   <!-- NAVBAR -->
-  <nav class="fixed top-0 left-0 w-full bg-white shadow z-50 flex items-center justify-between px-8 h-16" style="font-family: 'Roboto', sans-serif;">
-    <div class="flex items-center space-x-3">
-      <img src="/favicon-bw-50.svg" alt="Logo" class="h-8 w-8" />
-      <span class="text-xl font-bold text-gray-800 tracking-tight">VulneraMetrics</span>
-    </div>
-    <div class="flex items-center space-x-6">
-      <span class="text-gray-600 font-medium transition">Credits: {{ creditsStore.credits ?? 0 }}</span>
-      <a href="/" class="text-gray-600 hover:text-gray-900 font-medium transition">Home</a>
-      <a href="/profile" class="text-gray-600 hover:text-gray-900 font-medium transition">Profile</a>
-      <button class="bg-gray-800 text-white px-4 py-2 rounded-lg shadow hover:bg-gray-700 transition">Logout</button>
-    </div>
+  <nav class="fixed top-0 left-0 w-full bg-white shadow z-50 flex items-center justify-center px-8 h-16" style="font-family: 'Roboto', sans-serif;">
+    <img src="@/assets/logo-bw-50.png" alt="Logo" class="h-10 w-10" />
   </nav>
 
   <!-- MAIN CONTENT -->
