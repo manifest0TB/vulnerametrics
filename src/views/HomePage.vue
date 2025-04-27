@@ -85,7 +85,7 @@ onUnmounted(() => {
   <!-- NAVBAR -->
   <nav class="fixed top-0 left-0 w-full bg-white shadow z-50 flex items-center justify-between px-8 h-16" style="font-family: 'Roboto', sans-serif;">
     <div class="flex items-center space-x-3">
-      <img src="/logo.svg" alt="Logo" class="h-8 w-8" />
+      <img src="/favicon-bw-50.svg" alt="Logo" class="h-8 w-8" />
       <span class="text-xl font-bold text-gray-800 tracking-tight">VulneraMetrics</span>
     </div>
     <div class="flex items-center space-x-6">
