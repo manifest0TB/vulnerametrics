@@ -101,9 +101,9 @@ onUnmounted(() => {
 <template>
   <!-- NAVBAR -->
   <nav class="fixed top-0 left-0 w-full bg-white shadow z-50 flex items-center justify-between px-8 h-16" style="font-family: 'Roboto', sans-serif;">
-    <div class="flex items-center space-x-3">
-      <img src="@/assets/logo-bw-50.png" alt="Logo" class="h-10 w-10" />
-    </div>
+    <a href="/" class="flex items-center">
+      <img src="@/assets/logo-bw-50.png" alt="Logo" class="h-12 w-auto" style="max-width:60px;" />
+    </a>
     <div class="flex items-center space-x-6">
       <span class="text-gray-700 font-medium">Hi, {{ userName }}</span>
       <span class="text-green-500 font-semibold">Credits: {{ creditsStore.credits ?? 0 }}</span>
