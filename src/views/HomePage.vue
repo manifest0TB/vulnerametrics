@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // src/views/HomePage.vue
-import { ref, computed, onUnmounted } from 'vue';
+import { ref, computed, onUnmounted, watch } from 'vue';
 import { useCreditsStore } from '@/stores/credits';
 import { apiService } from '@/services/api';
 import type { CveDetails, ApiError } from '@/types/api';
@@ -19,6 +19,43 @@ const error = ref<string | null>(null);
 const cveDetails = ref<CveDetails | null>(null);
 const isGeneratingReport = ref(false);
 const reportUrl = ref<string | null>(null);
+
+// Mensaje y color animado para la carga del reporte
+const loadingMessages = [
+  'Generating your report…',
+  'AI is analyzing the vulnerability…',
+  'Almost there! Preparing your PDF…'
+];
+const loadingColors = [
+  'text-[#21C063]',
+  'text-[#38BDF8]',
+  'text-[#F59E42]'
+];
+const loadingMessage = ref(loadingMessages[0]);
+const loadingColorClass = ref(loadingColors[0]);
+let loadingInterval: number | null = null;
+
+watch(
+  () => isGeneratingReport.value,
+  (newVal) => {
+    if (newVal) {
+      let i = 0;
+      loadingInterval = window.setInterval(() => {
+        i = (i + 1) % loadingMessages.length;
+        loadingMessage.value = loadingMessages[i];
+        loadingColorClass.value = loadingColors[i];
+      }, 2000);
+    } else if (loadingInterval) {
+      clearInterval(loadingInterval);
+      loadingInterval = null;
+      loadingMessage.value = loadingMessages[0];
+      loadingColorClass.value = loadingColors[0];
+    }
+  }
+);
+onUnmounted(() => {
+  if (loadingInterval) clearInterval(loadingInterval);
+});
 
 // Computed properties
 const hasEnoughCredits = computed(() => (creditsStore.credits ?? 0) > 0);
@@ -105,6 +142,14 @@ onUnmounted(() => {
 //     router.push('/login');
 //   }
 // });
+
+// Handler para reiniciar la búsqueda
+const resetSearch = () => {
+  cveDetails.value = null;
+  reportUrl.value = null;
+  error.value = null;
+  cveIdInput.value = '';
+};
 </script>
 
 <template>
@@ -130,57 +175,78 @@ onUnmounted(() => {
       <template v-if="authStore.isAuthenticated">
         <h2 class="text-4xl font-bold text-[#18181B] mb-4 text-center">Search CVE</h2>
         <p class="text-[#4B5563] mb-10 text-lg text-center">Enter a CVE ID (e.g., CVE-2024-1234) to view its details and generate an AI-powered report.</p>
-        <form class="flex flex-col sm:flex-row items-center justify-center w-full gap-4 mb-6" @submit.prevent="handleSearch">
-          <input
-            type="text"
-            v-model="cveIdInput"
-            placeholder="CVE-2024-1234"
-            class="flex-grow rounded-xl border border-[#E5E7EB] px-6 py-4 text-2xl text-[#18181B] bg-white focus:ring-2 focus:ring-[#21C063] focus:outline-none transition w-full sm:w-auto"
-            :disabled="!authStore.isAuthenticated"
-          />
-          <button
-            type="submit"
-            :disabled="isLoading || !isValidCveFormat(cveIdInput) || !authStore.isAuthenticated"
-            class="bg-[#21C063] hover:bg-[#16994A] text-white px-10 py-4 rounded-xl shadow-lg text-xl font-semibold transition disabled:cursor-not-allowed disabled:opacity-50"
-            :class="{ 'animate-pulse': isLoading }"
-          >
-            {{ isLoading ? 'Searching...' : 'Search' }}
-          </button>
-        </form>
+        <template v-if="!cveDetails">
+          <form class="flex flex-col sm:flex-row items-center justify-center w-full gap-4 mb-6" @submit.prevent="handleSearch">
+            <input
+              type="text"
+              v-model="cveIdInput"
+              placeholder="CVE-2024-1234"
+              class="flex-grow rounded-xl border border-[#E5E7EB] px-6 py-4 text-2xl text-[#18181B] bg-white focus:ring-2 focus:ring-[#21C063] focus:outline-none transition w-full sm:w-auto"
+              :disabled="!authStore.isAuthenticated"
+            />
+            <button
+              type="submit"
+              :disabled="isLoading || !isValidCveFormat(cveIdInput) || !authStore.isAuthenticated"
+              class="bg-[#21C063] hover:bg-[#16994A] text-white px-10 py-4 rounded-xl shadow-lg text-xl font-semibold transition disabled:cursor-not-allowed disabled:opacity-50"
+              :class="{ 'animate-pulse': isLoading }"
+            >
+              {{ isLoading ? 'Searching...' : 'Search' }}
+            </button>
+          </form>
+        </template>
         <div v-if="error" class="bg-[#FEF2F2] border border-[#EF4444] text-[#EF4444] rounded-lg p-3 mb-4 flex items-center space-x-2">
           <svg class="w-5 h-5 text-[#EF4444]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
           <span>{{ error }}</span>
         </div>
-        <div v-if="cveDetails" class="mt-8 w-full">
-          <div class="bg-white rounded-xl p-8 mb-6 shadow-sm border border-[#E5E7EB]">
-            <h3 class="text-2xl font-medium text-[#18181B] mb-3">{{ cveDetails.id }}</h3>
-            <p class="text-lg text-[#4B5563]">{{ cveDetails.description }}</p>
-          </div>
-          <div class="flex items-center justify-between">
-            <span class="text-lg text-[#4B5563]">Available Credits: {{ creditsStore.credits ?? 0 }}</span>
-            <div class="flex items-center space-x-4">
-              <button
-                v-if="!reportUrl"
-                @click="handleGenerateReport"
-                :disabled="!canGenerateReport || isGeneratingReport || !authStore.isAuthenticated"
-                class="bg-[#21C063] hover:bg-[#16994A] text-white px-6 py-3 rounded-lg shadow transition text-lg font-semibold disabled:cursor-not-allowed disabled:opacity-50"
-                :class="{ 'animate-pulse': isGeneratingReport }"
-              >
-                {{ isGeneratingReport ? 'Generating...' : 'Generate Report' }}
-              </button>
-              <a
-                v-else
-                :href="reportUrl"
-                target="_blank"
-                rel="noopener"
-                download="vulnerability-report.pdf"
-                class="bg-[#21C063] hover:bg-[#16994A] text-white px-6 py-3 rounded-lg shadow transition text-lg font-semibold"
-              >
-                Download Report
-              </a>
+        <template v-if="cveDetails">
+          <div class="flex flex-col items-center justify-center w-full relative">
+            <!-- Overlay de carga animado -->
+            <div v-if="isGeneratingReport" class="absolute inset-0 flex flex-col items-center justify-center bg-white bg-opacity-80 rounded-3xl z-10">
+              <svg class="animate-spin h-12 w-12 mb-4" :class="loadingColorClass" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+              </svg>
+              <p :class="loadingColorClass" class="text-2xl font-semibold animate-pulse text-center">
+                {{ loadingMessage }}
+              </p>
+            </div>
+            <div class="flex flex-col items-center justify-center w-full">
+              <h3 class="text-3xl font-bold text-[#21C063] mb-6 text-center">Vulnerability Found</h3>
+              <div class="bg-white rounded-xl p-8 mb-6 shadow-sm border border-[#E5E7EB] w-full">
+                <h4 class="text-2xl font-medium text-[#18181B] mb-3">{{ cveDetails.id }}</h4>
+                <p class="text-lg text-[#4B5563]">{{ cveDetails.description }}</p>
+              </div>
+              <div class="flex flex-col items-center w-full">
+                <button
+                  v-if="!reportUrl"
+                  @click="handleGenerateReport"
+                  :disabled="!canGenerateReport || isGeneratingReport || !authStore.isAuthenticated"
+                  class="bg-[#21C063] hover:bg-[#16994A] text-white px-10 py-4 rounded-xl shadow-lg text-xl font-semibold transition disabled:cursor-not-allowed disabled:opacity-50 mb-4"
+                  :class="{ 'animate-pulse': isGeneratingReport }"
+                >
+                  {{ isGeneratingReport ? 'Generating...' : 'Generate Report' }}
+                </button>
+                <a
+                  v-else
+                  :href="reportUrl"
+                  target="_blank"
+                  rel="noopener"
+                  download="vulnerability-report.pdf"
+                  class="bg-[#21C063] hover:bg-[#16994A] text-white px-10 py-4 rounded-xl shadow-lg text-xl font-semibold transition mb-4"
+                >
+                  Download Report
+                </a>
+                <button
+                  v-if="reportUrl"
+                  @click="resetSearch"
+                  class="mt-4 px-8 py-3 rounded-xl bg-[#18181B] text-white text-lg font-medium shadow hover:bg-[#4B5563] transition"
+                >
+                  Search another CVE
+                </button>
+              </div>
             </div>
           </div>
-        </div>
+        </template>
       </template>
       <template v-else>
         <div class="flex flex-col items-center justify-center py-16">
