@@ -1,5 +1,5 @@
 import { fetchAuthSession } from 'aws-amplify/auth';
-import type { CveDetails, CreditsResponse, ApiError } from '@/types/api';
+import type { CveDetails, CreditsResponse, ReportResponse, ApiError } from '@/types/api';
 
 class ApiService {
   private baseUrl: string;
@@ -11,11 +11,11 @@ class ApiService {
   private async getAuthHeaders(): Promise<HeadersInit> {
     try {
       const session = await fetchAuthSession();
-      if (!session.tokens?.accessToken) {
-        throw new Error('No access token available');
+      if (!session.tokens?.idToken) {
+        throw new Error('No ID token available');
       }
       return {
-        'Authorization': `Bearer ${session.tokens.accessToken.toString()}`,
+        'Authorization': `Bearer ${session.tokens.idToken.toString()}`,
         'Content-Type': 'application/json'
       };
     } catch (error) {
@@ -24,11 +24,21 @@ class ApiService {
     }
   }
 
-  private handleApiError(response: Response): never {
+  private async handleApiError(response: Response): Promise<never> {
     const error: ApiError = {
       message: 'An error occurred while fetching data',
       code: response.status.toString()
     };
+
+    try {
+      const errorData = await response.json();
+      if (errorData.message) {
+        error.message = errorData.message;
+      }
+    } catch (e) {
+      // If we can't parse the error response, use the default message
+    }
+
     throw error;
   }
 
@@ -42,7 +52,7 @@ class ApiService {
     });
 
     if (!response.ok) {
-      this.handleApiError(response);
+      await this.handleApiError(response);
     }
 
     const data = await response.json();
@@ -50,6 +60,13 @@ class ApiService {
   }
 
   async getCveDetails(cveId: string): Promise<CveDetails> {
+    if (!/^CVE-\d{4}-\d{4,}$/i.test(cveId)) {
+      throw {
+        message: 'Invalid CVE ID format',
+        code: '400'
+      } as ApiError;
+    }
+
     const headers = await this.getAuthHeaders();
     const response = await fetch(`${this.baseUrl}/cve/${cveId}`, {
       method: 'GET',
@@ -59,14 +76,21 @@ class ApiService {
     });
 
     if (!response.ok) {
-      this.handleApiError(response);
+      await this.handleApiError(response);
     }
 
     const data = await response.json();
     return data as CveDetails;
   }
 
-  async generateReport(cveId: string): Promise<Blob> {
+  async generateReport(cveId: string): Promise<ReportResponse> {
+    if (!/^CVE-\d{4}-\d{4,}$/i.test(cveId)) {
+      throw {
+        message: 'Invalid CVE ID format',
+        code: '400'
+      } as ApiError;
+    }
+
     const headers = await this.getAuthHeaders();
     const response = await fetch(`${this.baseUrl}/report/${cveId}`, {
       method: 'POST',
@@ -76,10 +100,11 @@ class ApiService {
     });
 
     if (!response.ok) {
-      this.handleApiError(response);
+      await this.handleApiError(response);
     }
 
-    return response.blob();
+    const data = await response.json();
+    return data as ReportResponse;
   }
 }
 

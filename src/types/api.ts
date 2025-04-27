@@ -1,19 +1,20 @@
 export interface CveDetails {
-  id: string;
-  description: string;
-  published: string;
-  modified: string;
-  severity?: string;
-  cvss?: number;
-  references?: string[];
-  // Add any other fields that the API returns
+  // This will contain the raw NVD API response structure
+  [key: string]: any;
 }
 
 export interface CreditsResponse {
-  credits: number;
+  creditBalance: number;
+}
+
+export interface ReportResponse {
+  message: string;
+  reportKey: string;
+  cveId: string;
+  timestamp: string;
 }
 
 export interface ApiError {
   message: string;
-  code?: string;
+  code: string;
 } 
