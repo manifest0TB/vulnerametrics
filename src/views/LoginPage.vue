@@ -58,7 +58,7 @@ const handleLogin = async () => {
               v-model="email"
               autocomplete="email"
               required
-              class="block w-full rounded-md border-0 px-3 py-2 text-white bg-[#18181B] shadow-sm ring-1 ring-inset ring-[#23272F] placeholder:text-[#B0B3B8] focus:ring-2 focus:ring-inset focus:ring-[#21C063] sm:text-base"
+              class="block w-full rounded-md border-0 px-3 py-2 text-white bg-[#18181B] shadow-sm ring-1 ring-inset ring-[#23272F] placeholder:text-[#B0B3B8] focus:ring-2 focus:ring-inset focus:ring-[#21C063] focus:outline-none sm:text-base"
             />
           </div>
         </div>
@@ -72,7 +72,7 @@ const handleLogin = async () => {
               v-model="password"
               autocomplete="current-password"
               required
-              class="block w-full rounded-md border-0 px-3 py-2 pr-10 text-white bg-[#18181B] shadow-sm ring-1 ring-inset ring-[#23272F] placeholder:text-[#B0B3B8] focus:ring-2 focus:ring-inset focus:ring-[#21C063] sm:text-base"
+              class="block w-full rounded-md border-0 px-3 py-2 pr-10 text-white bg-[#18181B] shadow-sm ring-1 ring-inset ring-[#23272F] placeholder:text-[#B0B3B8] focus:ring-2 focus:ring-inset focus:ring-[#21C063] focus:outline-none sm:text-base"
             />
             <button
               type="button"

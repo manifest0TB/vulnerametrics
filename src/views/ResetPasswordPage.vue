@@ -145,7 +145,7 @@ const handleResetPassword = async () => {
               type="text"
               v-model="code"
               required
-              class="block w-full rounded-md border-0 px-3 py-2 text-white bg-[#18181B] shadow-sm ring-1 ring-inset ring-[#23272F] placeholder:text-[#B0B3B8] focus:ring-2 focus:ring-inset focus:ring-[#21C063] sm:text-base"
+              class="block w-full rounded-md border-0 px-3 py-2 text-white bg-[#18181B] shadow-sm ring-1 ring-inset ring-[#23272F] placeholder:text-[#B0B3B8] focus:ring-2 focus:ring-inset focus:ring-[#21C063] focus:outline-none sm:text-base"
             />
           </div>
           <p v-if="validationErrors.code" class="mt-2 text-sm text-[#EF4444]">
@@ -161,7 +161,7 @@ const handleResetPassword = async () => {
               :type="isPasswordVisible ? 'text' : 'password'"
               v-model="newPassword"
               required
-              class="block w-full rounded-md border-0 px-3 py-2 text-white bg-[#18181B] shadow-sm ring-1 ring-inset ring-[#23272F] placeholder:text-[#B0B3B8] focus:ring-2 focus:ring-inset focus:ring-[#21C063] sm:text-base"
+              class="block w-full rounded-md border-0 px-3 py-2 text-white bg-[#18181B] shadow-sm ring-1 ring-inset ring-[#23272F] placeholder:text-[#B0B3B8] focus:ring-2 focus:ring-inset focus:ring-[#21C063] focus:outline-none sm:text-base"
             />
             <button
               type="button"
@@ -184,7 +184,7 @@ const handleResetPassword = async () => {
               :type="isPasswordVisible ? 'text' : 'password'"
               v-model="confirmPassword"
               required
-              class="block w-full rounded-md border-0 px-3 py-2 text-white bg-[#18181B] shadow-sm ring-1 ring-inset ring-[#23272F] placeholder:text-[#B0B3B8] focus:ring-2 focus:ring-inset focus:ring-[#21C063] sm:text-base"
+              class="block w-full rounded-md border-0 px-3 py-2 text-white bg-[#18181B] shadow-sm ring-1 ring-inset ring-[#23272F] placeholder:text-[#B0B3B8] focus:ring-2 focus:ring-inset focus:ring-[#21C063] focus:outline-none sm:text-base"
             />
             <button
               type="button"

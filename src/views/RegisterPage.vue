@@ -128,7 +128,7 @@ const handleRegister = async () => {
               minlength="4"
               maxlength="20"
               pattern="[a-zA-Z0-9_-]*"
-              class="block w-full rounded-md border-0 px-3 py-2 text-white bg-[#18181B] shadow-sm ring-1 ring-inset ring-[#23272F] placeholder:text-[#B0B3B8] focus:ring-2 focus:ring-inset focus:ring-[#21C063] sm:text-base"
+              class="block w-full rounded-md border-0 px-3 py-2 text-white bg-[#18181B] shadow-sm ring-1 ring-inset ring-[#23272F] placeholder:text-[#B0B3B8] focus:ring-2 focus:ring-inset focus:ring-[#21C063] focus:outline-none sm:text-base"
             />
           </div>
           <p v-if="validationErrors.nickname" class="mt-2 text-sm text-[#EF4444]">
@@ -150,7 +150,7 @@ const handleRegister = async () => {
               required
               maxlength="254"
               :pattern="emailPattern"
-              class="block w-full rounded-md border-0 px-3 py-2 text-white bg-[#18181B] shadow-sm ring-1 ring-inset ring-[#23272F] placeholder:text-[#B0B3B8] focus:ring-2 focus:ring-inset focus:ring-[#21C063] sm:text-base"
+              class="block w-full rounded-md border-0 px-3 py-2 text-white bg-[#18181B] shadow-sm ring-1 ring-inset ring-[#23272F] placeholder:text-[#B0B3B8] focus:ring-2 focus:ring-inset focus:ring-[#21C063] focus:outline-none sm:text-base"
             />
           </div>
           <p v-if="validationErrors.email" class="mt-2 text-sm text-[#EF4444]">
@@ -168,7 +168,7 @@ const handleRegister = async () => {
               required
               maxlength="256"
               pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).{8,}$"
-              class="block w-full rounded-md border-0 px-3 py-2 pr-10 text-white bg-[#18181B] shadow-sm ring-1 ring-inset ring-[#23272F] placeholder:text-[#B0B3B8] focus:ring-2 focus:ring-inset focus:ring-[#21C063] sm:text-base"
+              class="block w-full rounded-md border-0 px-3 py-2 pr-10 text-white bg-[#18181B] shadow-sm ring-1 ring-inset ring-[#23272F] placeholder:text-[#B0B3B8] focus:ring-2 focus:ring-inset focus:ring-[#21C063] focus:outline-none sm:text-base"
             />
             <button
               type="button"
@@ -202,21 +202,21 @@ const handleRegister = async () => {
               v-model="confirmPassword"
               required
               maxlength="256"
-              class="block w-full rounded-md border-0 px-3 py-2 text-white bg-[#18181B] shadow-sm ring-1 ring-inset ring-[#23272F] placeholder:text-[#B0B3B8] focus:ring-2 focus:ring-inset focus:ring-[#21C063] sm:text-base"
+              class="block w-full rounded-md border-0 px-3 py-2 text-white bg-[#18181B] shadow-sm ring-1 ring-inset ring-[#23272F] placeholder:text-[#B0B3B8] focus:ring-2 focus:ring-inset focus:ring-[#21C063] focus:outline-none sm:text-base"
             />
           </div>
           <p v-if="passwordMismatch" class="mt-2 text-sm text-[#EF4444]">
             Passwords do not match
           </p>
         </div>
-        <div class="flex items-center space-x-4 mt-4">
-          <label class="flex items-center text-sm text-[#B0B3B8]">
-            <input type="checkbox" v-model="acceptTerms" required class="mr-2 accent-[#21C063]" />
+        <div class="flex flex-col items-center space-y-2 mt-4">
+          <label class="flex items-center gap-2 text-sm text-[#B0B3B8]">
+            <input type="checkbox" v-model="acceptTerms" required class="h-4 w-4 accent-[#21C063]" />
             I accept the
             <RouterLink to="/terms" class="underline hover:text-[#21C063] ml-1">Terms of Service</RouterLink>
           </label>
-          <label class="flex items-center text-sm text-[#B0B3B8]">
-            <input type="checkbox" v-model="acceptPrivacy" required class="mr-2 accent-[#21C063]" />
+          <label class="flex items-center gap-2 text-sm text-[#B0B3B8]">
+            <input type="checkbox" v-model="acceptPrivacy" required class="h-4 w-4 accent-[#21C063]" />
             I accept the
             <RouterLink to="/privacy" class="underline hover:text-[#21C063] ml-1">Privacy Policy</RouterLink>
           </label>

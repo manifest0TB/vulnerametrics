@@ -115,7 +115,7 @@ const handleResendCode = async () => {
               inputmode="numeric"
               v-model="confirmationCode"
               required
-              class="block w-full rounded-md border-0 px-3 py-2 text-text-primary bg-dark-input shadow-sm ring-1 ring-inset ring-dark-card placeholder:text-text-secondary focus:ring-2 focus:ring-inset focus:ring-primary sm:text-base"
+              class="block w-full rounded-md border-0 px-3 py-2 text-text-primary bg-dark-input shadow-sm ring-1 ring-inset ring-dark-card placeholder:text-text-secondary focus:ring-2 focus:ring-inset focus:ring-primary focus:outline-none sm:text-base"
             />
           </div>
         </div>

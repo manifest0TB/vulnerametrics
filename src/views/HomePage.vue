@@ -185,7 +185,7 @@ const resetSearch = () => {
       <template v-if="authStore.isAuthenticated">
         <template v-if="!cveDetails && !isGeneratingReport">
           <h2 class="text-4xl font-bold text-white mb-4 text-center">Search CVE</h2>
-          <p class="text-[#B0B3B8] mb-10 text-lg text-center">Enter a CVE ID (e.g., CVE-2024-1234) to view its details and generate an AI-powered report.</p>
+          <p class="text-[#B0B3B8] mb-10 text-lg text-center">Please, enter a CVE ID (e.g., CVE-2024-1234) to generate an AI-powered report.</p>
         </template>
         <template v-if="!cveDetails">
           <form class="flex flex-col sm:flex-row items-center justify-center w-full gap-4 mb-6" @submit.prevent="handleSearch">
