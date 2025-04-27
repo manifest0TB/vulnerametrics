@@ -4,6 +4,7 @@ import { ref, computed, onUnmounted } from 'vue';
 import { useCreditsStore } from '@/stores/credits';
 import { apiService } from '@/services/api';
 import type { CveDetails, ApiError } from '@/types/api';
+import { getUrl } from 'aws-amplify/storage';
 
 // Initialize stores
 const creditsStore = useCreditsStore();
@@ -57,9 +58,10 @@ const handleGenerateReport = async () => {
   error.value = null;
 
   try {
-    const reportBlob = await apiService.generateReport(cveIdInput.value);
-    // Create a URL for the blob
-    reportUrl.value = URL.createObjectURL(reportBlob);
+    const reportResponse = await apiService.generateReport(cveIdInput.value);
+    // Obtener el pre-signed URL usando Amplify Storage v6
+    const { url } = await getUrl({ path: reportResponse.reportKey, options: { expiresIn: 300 } });
+    reportUrl.value = url.toString();
     // Refresh credits after generating report
     await creditsStore.fetchCredits();
   } catch (err) {

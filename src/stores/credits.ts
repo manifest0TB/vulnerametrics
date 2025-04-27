@@ -12,7 +12,7 @@ export const useCreditsStore = defineStore('credits', () => {
     error.value = null;
     try {
       const response = await apiService.checkCredits();
-      credits.value = response.credits;
+      credits.value = response.creditBalance;
     } catch (err) {
       error.value = err instanceof Error ? err.message : 'Failed to fetch credits';
       console.error('Error fetching credits:', err);
