@@ -58,12 +58,12 @@ const routes: Array<RouteRecordRaw> = [
     meta: { requiresGuest: true }
   },
   {
-    path: '/privacy-policy',
+    path: '/privacy',
     name: 'PrivacyPolicy',
     component: PrivacyPolicyPage,
   },
   {
-    path: '/terms-of-service',
+    path: '/terms',
     name: 'TermsOfService',
     component: TermsOfServicePage,
   },

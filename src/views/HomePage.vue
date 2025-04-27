@@ -33,7 +33,7 @@ onMounted(() => {
         {{ animatedTitle }}<span v-if="animatedTitle.length < fullTitle.length" class="typewriter-cursor">|</span>
       </h1>
       <p class="text-lg text-[#B0B3B8] mb-8 text-center">
-        VulneraMetrics is your AI-powered platform for analyzing software vulnerabilities (CVEs) and generating actionable security reports. Search for any CVE and instantly get a detailed, professional PDF report.
+        VulneraMetrics is a cybersecurity tool to generate detailed PDF reports on specific CVE using Claude 3.7 Sonnet on AWS Bedrock. 
       </p>
       <RouterLink
         to="/generate-reports"
