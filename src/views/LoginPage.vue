@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // src/views/LoginPage.vue
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useRouter, RouterLink } from 'vue-router';
 import { useAuthStore } from '@/stores/auth'; // Import the auth store
 
@@ -12,10 +12,16 @@ const router = useRouter();
 const email = ref<string>('');
 const password = ref<string>('');
 const isPasswordVisible = ref<boolean>(false);
+const loginError = ref<string | null>(null);
 
 // Computed properties to access store state easily
 const isLoading = computed(() => authStore.loading);
-const errorMessage = computed(() => authStore.error);
+
+// Clear any previous errors when the component mounts
+onMounted(() => {
+  authStore.error = null;
+  loginError.value = null;
+});
 
 // Toggle password visibility function
 const togglePasswordVisibility = () => {
@@ -24,6 +30,7 @@ const togglePasswordVisibility = () => {
 
 // Handler for form submission
 const handleLogin = async () => {
+  loginError.value = null;
   try {
     await authStore.login(email.value, password.value);
     // Si llegamos aquí, el login fue exitoso
@@ -31,6 +38,7 @@ const handleLogin = async () => {
     router.push({ name: 'Home' });
   } catch (error) {
     console.error('Login error:', error);
+    loginError.value = 'Invalid email or password. Please try again.';
   }
 };
 </script>
@@ -83,11 +91,8 @@ const handleLogin = async () => {
             Forgot your password?
           </RouterLink>
         </div>
-        <div v-if="errorMessage" class="text-center text-sm mt-2" :class="{
-          'text-[#EF4444]': !errorMessage.includes('successfully'),
-          'text-[#21C063]': errorMessage.includes('successfully')
-        }">
-          {{ errorMessage }}
+        <div v-if="loginError" class="text-center text-sm mt-2 text-error-text">
+          {{ loginError }}
         </div>
         <div>
           <button
