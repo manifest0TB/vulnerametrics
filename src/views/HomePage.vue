@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // src/views/HomePage.vue
-import { ref, computed, onUnmounted, watchEffect } from 'vue';
+import { ref, computed, onUnmounted } from 'vue';
 import { useCreditsStore } from '@/stores/credits';
 import { apiService } from '@/services/api';
 import type { CveDetails, ApiError } from '@/types/api';
