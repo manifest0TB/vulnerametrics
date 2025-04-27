@@ -1,19 +1,37 @@
 <script setup lang="ts">
-// src/views/HomePage.vue
+import { ref, onMounted } from 'vue';
 import { RouterLink } from 'vue-router';
+
+const fullTitle = 'Welcome to VulneraMetrics';
+const animatedTitle = ref('');
+
+onMounted(() => {
+  let i = 0;
+  const speed = 40; // ms per character, adjust for speed
+  function typeWriter() {
+    if (i < fullTitle.length) {
+      animatedTitle.value += fullTitle.charAt(i);
+      i++;
+      setTimeout(typeWriter, speed);
+    }
+  }
+  typeWriter();
+});
 </script>
 
 <template>
   <div class="flex flex-col items-center justify-center min-h-screen bg-[#161717]" style="font-family: 'Roboto', sans-serif;">
     <div class="w-full max-w-2xl bg-[#23272F] rounded-3xl shadow-2xl p-16 flex flex-col items-center mt-24 mb-12 border border-[#23272F]">
       <img src="@/assets/vmlogo_white.svg" alt="VulneraMetrics Logo" class="h-20 w-auto mb-8" />
-      <h1 class="text-4xl font-bold text-white mb-4 text-center">Welcome to VulneraMetrics!</h1>
+      <h1 class="text-4xl font-bold text-white mb-4 text-center typewriter">
+        {{ animatedTitle }}<span v-if="animatedTitle.length < fullTitle.length" class="typewriter-cursor">|</span>
+      </h1>
       <p class="text-lg text-[#B0B3B8] mb-8 text-center">
-        VulneraMetrics is a cybersecurity tool to generate detailed PDF reports on specific CVE using Claude 3.7 Sonnet on AWS Bedrock. 
+        VulneraMetrics is your AI-powered platform for analyzing software vulnerabilities (CVEs) and generating actionable security reports. Search for any CVE and instantly get a detailed, professional PDF report.
       </p>
       <RouterLink
         to="/generate-reports"
-        class="bg-primary hover:bg-primary-hover text-white px-10 py-4 rounded-xl shadow-lg text-xl font-semibold transition"
+        class="bg-primary hover:bg-primary-hover text-white px-10 py-4 rounded-xl shadow-lg text-xl font-semibold transition cta-glow"
       >
         Search CVE
       </RouterLink>
@@ -26,5 +44,34 @@ import { RouterLink } from 'vue-router';
 </template>
 
 <style scoped>
-/* Add any component-specific styles here if needed */
+.typewriter {
+  min-height: 3.5rem;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.typewriter-cursor {
+  display: inline-block;
+  width: 1ch;
+  color: #21C063;
+  animation: blink 0.8s steps(1) infinite;
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+.cta-glow {
+  box-shadow: 0 0 16px 2px #21C063, 0 0 32px 4px #21C06333;
+  animation: glow-pulse 1.8s infinite alternate;
+}
+@keyframes glow-pulse {
+  0% {
+    box-shadow: 0 0 16px 2px #21C063, 0 0 32px 4px #21C06333;
+    filter: brightness(1.05);
+  }
+  100% {
+    box-shadow: 0 0 32px 8px #21C063, 0 0 48px 12px #21C06344;
+    filter: brightness(1.18);
+  }
+}
 </style>
