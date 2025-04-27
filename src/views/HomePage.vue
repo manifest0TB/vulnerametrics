@@ -2,17 +2,23 @@
 import { ref, onMounted } from 'vue';
 import { RouterLink } from 'vue-router';
 
-const fullTitle = 'Welcome to VulneraMetrics';
+const fullTitle = 'Welcome to VulneraMetrics!';
 const animatedTitle = ref('');
 
 onMounted(() => {
   let i = 0;
-  const speed = 40; // ms per character, adjust for speed
+  const speed = 40; // ms per character
   function typeWriter() {
     if (i < fullTitle.length) {
       animatedTitle.value += fullTitle.charAt(i);
       i++;
       setTimeout(typeWriter, speed);
+    } else {
+      setTimeout(() => {
+        animatedTitle.value = '';
+        i = 0;
+        setTimeout(typeWriter, 600); // small pause before restarting
+      }, 1200); // pause after finishing
     }
   }
   typeWriter();
@@ -61,17 +67,17 @@ onMounted(() => {
   50% { opacity: 0; }
 }
 .cta-glow {
-  box-shadow: 0 0 16px 2px #21C063, 0 0 32px 4px #21C06333;
-  animation: glow-pulse 1.8s infinite alternate;
+  box-shadow: 0 0 4px 0 #21C06344, 0 0 8px 0 #21C06322;
+  animation: glow-pulse 2.2s infinite alternate;
 }
 @keyframes glow-pulse {
   0% {
-    box-shadow: 0 0 16px 2px #21C063, 0 0 32px 4px #21C06333;
-    filter: brightness(1.05);
+    box-shadow: 0 0 4px 0 #21C06344, 0 0 8px 0 #21C06322;
+    filter: brightness(1.01);
   }
   100% {
-    box-shadow: 0 0 32px 8px #21C063, 0 0 48px 12px #21C06344;
-    filter: brightness(1.18);
+    box-shadow: 0 0 10px 2px #21C06333, 0 0 16px 4px #21C06322;
+    filter: brightness(1.06);
   }
 }
 </style>
