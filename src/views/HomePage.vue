@@ -155,6 +155,8 @@ onUnmounted(() => {
             <a
               v-else
               :href="reportUrl"
+              target="_blank"
+              rel="noopener"
               download="vulnerability-report.pdf"
               class="rounded bg-green-600 px-4 py-2 text-sm text-white transition-colors hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-1"
             >
