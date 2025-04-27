@@ -58,7 +58,12 @@ const handleConfirmation = async () => {
     successMessage.value = 'Account confirmed successfully! Redirecting to login...';
     // Wait a moment to show the success message before redirecting
     setTimeout(() => {
-      router.push({ name: 'Login' });
+      const redirect = route.query.redirect as string | undefined;
+      if (redirect) {
+        router.push({ name: 'Login', query: { redirect } });
+      } else {
+        router.push({ name: 'Login' });
+      }
     }, 2000);
   } catch (error) {
     console.error('Confirmation error:', error);
@@ -151,6 +156,15 @@ const handleResendCode = async () => {
         >
           {{ canResendCode ? "Didn't receive a code? Resend" : `Wait ${cooldownSeconds}s to resend` }}
         </button>
+      </div>
+
+      <div class="mt-6 text-center text-sm">
+        <RouterLink
+          :to="{ name: 'Login', query: route.query.redirect ? { redirect: route.query.redirect } : undefined }"
+          class="font-semibold text-[#21C063] hover:underline"
+        >
+          Back to Sign In
+        </RouterLink>
       </div>
     </div>
   </div>

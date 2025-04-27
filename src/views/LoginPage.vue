@@ -1,12 +1,13 @@
 <script setup lang="ts">
 // src/views/LoginPage.vue
 import { ref, computed, onMounted } from 'vue';
-import { useRouter, RouterLink } from 'vue-router';
+import { useRouter, useRoute, RouterLink } from 'vue-router';
 import { useAuthStore } from '@/stores/auth'; // Import the auth store
 
 // Initialize the auth store and router
 const authStore = useAuthStore();
 const router = useRouter();
+const route = useRoute();
 
 // Local reactive state for form inputs
 const email = ref<string>('');
@@ -33,9 +34,13 @@ const handleLogin = async () => {
   loginError.value = null;
   try {
     await authStore.login(email.value, password.value);
-    // Si llegamos aquí, el login fue exitoso
-    console.log('Redirecting to home page after successful login...');
-    router.push({ name: 'Home' });
+    // Redirect to the original destination if present
+    const redirect = route.query.redirect as string | undefined;
+    if (redirect) {
+      router.push(redirect);
+    } else {
+      router.push({ name: 'Home' });
+    }
   } catch (error) {
     console.error('Login error:', error);
     loginError.value = 'Invalid email or password. Please try again.';
@@ -108,7 +113,7 @@ const handleLogin = async () => {
       <p class="mt-10 text-center text-sm text-[#B0B3B8]">
         Not a member?
         <RouterLink
-          to="/register"
+          :to="{ name: 'Register', query: route.query.redirect ? { redirect: route.query.redirect } : undefined }"
           class="font-semibold text-[#21C063] hover:underline"
         >
           Register here

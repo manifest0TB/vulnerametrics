@@ -1,13 +1,14 @@
 <script setup lang="ts">
 // src/views/RegisterPage.vue
 import { ref, computed } from 'vue';
-import { useRouter, RouterLink } from 'vue-router';
+import { useRouter, useRoute, RouterLink } from 'vue-router';
 import { useAuthStore } from '@/stores/auth'; // Import the auth store
 import { validateNickname, validateEmail, validatePassword } from '@/utils/inputValidation';
 
 // Initialize store and router
 const authStore = useAuthStore();
 const router = useRouter();
+const route = useRoute();
 
 // Validation patterns
 const emailPattern = '^[^<>\'"`;\{\}%]*$';
@@ -92,17 +93,23 @@ const handleRegister = async () => {
 
     console.log('Register action result:', result);
 
+    const redirect = route.query.redirect as string | undefined;
+
     if ('isSignUpComplete' in result) {
       if (result.isSignUpComplete) {
-        console.log('Registration complete and user likely auto-signed in. Redirecting home...');
-        router.push({ name: 'Home' });
+        console.log('Registration complete and user likely auto-signed in. Redirecting...');
+        if (redirect) {
+          router.push(redirect);
+        } else {
+          router.push({ name: 'Home' });
+        }
       } else {
         console.log('Registration initiated, confirmation required. Redirecting...');
-        router.push({ name: 'ConfirmRegistration', query: { email: email.value, nickname: nickname.value } });
+        router.push({ name: 'ConfirmRegistration', query: { email: email.value, nickname: nickname.value, ...(redirect ? { redirect } : {}) } });
       }
     } else {
       console.log('Registration initiated, confirmation required. Redirecting...');
-      router.push({ name: 'ConfirmRegistration', query: { email: email.value, nickname: nickname.value } });
+      router.push({ name: 'ConfirmRegistration', query: { email: email.value, nickname: nickname.value, ...(redirect ? { redirect } : {}) } });
     }
   } catch (error) {
     console.error('Registration error:', error);
@@ -241,7 +248,7 @@ const handleRegister = async () => {
       <p class="mt-10 text-center text-sm text-[#B0B3B8]">
         Already have an account?
         <RouterLink
-          to="/login"
+          :to="{ name: 'Login', query: route.query.redirect ? { redirect: route.query.redirect } : undefined }"
           class="font-semibold text-[#21C063] hover:underline"
         >
           Sign in here
