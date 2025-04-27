@@ -173,8 +173,10 @@ const resetSearch = () => {
   <div class="pt-24 flex flex-col items-center min-h-screen bg-[#161717]" style="font-family: 'Roboto', sans-serif;">
     <div class="w-full max-w-3xl bg-[#23272F] rounded-3xl shadow-2xl p-16 mb-12 border border-[#23272F] flex flex-col items-center">
       <template v-if="authStore.isAuthenticated">
-        <h2 class="text-4xl font-bold text-white mb-4 text-center">Search CVE</h2>
-        <p class="text-[#B0B3B8] mb-10 text-lg text-center">Enter a CVE ID (e.g., CVE-2024-1234) to view its details and generate an AI-powered report.</p>
+        <template v-if="!cveDetails && !isGeneratingReport">
+          <h2 class="text-4xl font-bold text-white mb-4 text-center">Search CVE</h2>
+          <p class="text-[#B0B3B8] mb-10 text-lg text-center">Enter a CVE ID (e.g., CVE-2024-1234) to view its details and generate an AI-powered report.</p>
+        </template>
         <template v-if="!cveDetails">
           <form class="flex flex-col sm:flex-row items-center justify-center w-full gap-4 mb-6" @submit.prevent="handleSearch">
             <input
