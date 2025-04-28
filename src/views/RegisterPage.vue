@@ -39,6 +39,16 @@ const togglePasswordVisibility = () => {
   isPasswordVisible.value = !isPasswordVisible.value;
 };
 
+// Real-time password validation
+const passwordRules = [
+  { label: 'At least 8 characters long', test: (v: string) => v.length >= 8 },
+  { label: 'Contains at least 1 number', test: (v: string) => /\d/.test(v) },
+  { label: 'Contains at least 1 lowercase letter', test: (v: string) => /[a-z]/.test(v) },
+  { label: 'Contains at least 1 uppercase letter', test: (v: string) => /[A-Z]/.test(v) },
+  { label: 'Contains at least 1 special character', test: (v: string) => /[^a-zA-Z0-9]/.test(v) },
+];
+const passwordStatus = computed(() => passwordRules.map(rule => rule.test(password.value)));
+
 // Handler for form submission
 const handleRegister = async () => {
   // Reset validation errors
@@ -192,11 +202,12 @@ const handleRegister = async () => {
         <div class="mt-2 space-y-1">
           <p class="text-sm font-medium text-[#B0B3B8]">Password requirements:</p>
           <ul class="text-xs text-[#B0B3B8] space-y-1">
-            <li>At least 8 characters long</li>
-            <li>Contains at least 1 number</li>
-            <li>Contains at least 1 lowercase letter</li>
-            <li>Contains at least 1 uppercase letter</li>
-            <li>Contains at least 1 special character</li>
+            <li v-for="(rule, idx) in passwordRules" :key="rule.label" class="flex items-center gap-2">
+              <span :class="passwordStatus[idx] ? 'text-[#21C063]' : 'text-[#EF4444]'">
+                <svg v-if="password" :class="passwordStatus[idx] ? '' : 'opacity-40'" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24"><path v-if="passwordStatus[idx]" stroke="currentColor" stroke-width="2" d="M5 13l4 4L19 7"/><circle v-else stroke="currentColor" stroke-width="2" cx="12" cy="12" r="7"/></svg>
+              </span>
+              <span :class="passwordStatus[idx] ? 'text-[#21C063]' : ''">{{ rule.label }}</span>
+            </li>
           </ul>
         </div>
         <div>
@@ -216,7 +227,7 @@ const handleRegister = async () => {
             Passwords do not match
           </p>
         </div>
-        <div class="flex flex-col items-center space-y-2 mt-4">
+        <div class="flex flex-col items-start space-y-2 mt-4">
           <label class="flex items-center gap-2 text-sm text-[#B0B3B8]">
             <input type="checkbox" v-model="acceptTerms" required class="h-4 w-4 accent-[#21C063]" />
             I accept the
