@@ -223,14 +223,13 @@ const resetSearch = () => {
               </p>
             </div>
             <h3 class="text-3xl font-bold text-[#21C063] mb-6 text-center">Vulnerability Found</h3>
-            <div class="bg-[#18181B] rounded-xl p-8 mb-6 shadow-sm border border-[#23272F] w-full">
-              <h4 class="text-2xl font-medium text-white mb-3 text-center">{{ cveDetails.id }}</h4>
-              
+            <div class="bg-[#18181B] rounded-xl p-4 mb-6 shadow-sm border border-[#23272F] w-full">
+              <h4 class="text-xl font-medium text-white mb-2 text-center">{{ cveDetails.id }}</h4>
               <!-- Basic CVE Information -->
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                <div class="bg-dark-card rounded-lg p-4">
-                  <h5 class="text-sm font-medium text-text-secondary mb-2">Severity</h5>
-                  <p class="text-lg font-semibold" :class="{
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+                <div class="bg-dark-card rounded-lg p-3">
+                  <h5 class="text-xs font-medium text-text-secondary mb-1">Severity</h5>
+                  <p class="text-base font-semibold" :class="{
                     'text-error-text': cveDetails.severity === 'HIGH' || cveDetails.severity === 'CRITICAL',
                     'text-[#F59E42]': cveDetails.severity === 'MEDIUM',
                     'text-[#21C063]': cveDetails.severity === 'LOW'
@@ -238,15 +237,15 @@ const resetSearch = () => {
                     {{ cveDetails.severity || 'Not specified' }}
                   </p>
                 </div>
-                <div class="bg-dark-card rounded-lg p-4">
-                  <h5 class="text-sm font-medium text-text-secondary mb-2">Published Date</h5>
-                  <p class="text-lg font-semibold text-text-primary">
+                <div class="bg-dark-card rounded-lg p-3">
+                  <h5 class="text-xs font-medium text-text-secondary mb-1">Published Date</h5>
+                  <p class="text-base font-semibold text-text-primary">
                     {{ cveDetails.publishedDate ? new Date(cveDetails.publishedDate).toLocaleDateString() : 'Not specified' }}
                   </p>
                 </div>
-                <div class="bg-dark-card rounded-lg p-4">
-                  <h5 class="text-sm font-medium text-text-secondary mb-2">CVSS Score</h5>
-                  <p class="text-lg font-semibold" :class="{
+                <div class="bg-dark-card rounded-lg p-3">
+                  <h5 class="text-xs font-medium text-text-secondary mb-1">CVSS Score</h5>
+                  <p class="text-base font-semibold" :class="{
                     'text-error-text': cveDetails.cvssScore >= 7.0,
                     'text-[#F59E42]': cveDetails.cvssScore >= 4.0 && cveDetails.cvssScore < 7.0,
                     'text-[#21C063]': cveDetails.cvssScore < 4.0
@@ -254,46 +253,46 @@ const resetSearch = () => {
                     {{ cveDetails.cvssScore || 'Not specified' }}
                   </p>
                 </div>
-                <div class="bg-dark-card rounded-lg p-4">
-                  <h5 class="text-sm font-medium text-text-secondary mb-2">Status</h5>
-                  <p class="text-lg font-semibold text-text-primary">
+                <div class="bg-dark-card rounded-lg p-3">
+                  <h5 class="text-xs font-medium text-text-secondary mb-1">Status</h5>
+                  <p class="text-base font-semibold text-text-primary">
                     {{ cveDetails.status || 'Not specified' }}
                   </p>
                 </div>
-      </div>
-
-              <!-- Description -->
-              <div class="mb-6">
-                <h5 class="text-sm font-medium text-text-secondary mb-2">Description</h5>
-                <p class="text-lg text-text-secondary">{{ cveDetails.description }}</p>
-        </div>
-
-              <!-- Additional Information -->
-              <div v-if="cveDetails.affectedProducts" class="mb-6">
-                <h5 class="text-sm font-medium text-text-secondary mb-2">Affected Products</h5>
-                <p class="text-lg text-text-secondary">{{ cveDetails.affectedProducts }}</p>
               </div>
-          </div>
+              <!-- Description -->
+              <div class="mb-3">
+                <h5 class="text-xs font-medium text-text-secondary mb-1">Description</h5>
+                <p class="text-base text-text-secondary">{{ cveDetails.description }}</p>
+              </div>
+              <!-- Additional Information -->
+              <div v-if="cveDetails.affectedProducts" class="mb-3">
+                <h5 class="text-xs font-medium text-text-secondary mb-1">Affected Products</h5>
+                <p class="text-base text-text-secondary">{{ cveDetails.affectedProducts }}</p>
+              </div>
+              <!-- Debug: Show formatted JSON -->
+              <pre v-if="cveDetails" class="bg-[#23272F] text-xs text-[#38BDF8] rounded p-2 overflow-x-auto mt-2">{{ JSON.stringify(cveDetails, null, 2) }}</pre>
+            </div>
             <div class="flex flex-col items-center w-full">
-            <button
-              v-if="!reportUrl"
-              @click="handleGenerateReport"
-              :disabled="!canGenerateReport || isGeneratingReport"
-                class="bg-[#21C063] hover:bg-[#16994A] text-white px-10 py-4 rounded-xl shadow-lg text-xl font-semibold transition disabled:cursor-not-allowed disabled:opacity-50 mb-4"
-              :class="{ 'animate-pulse': isGeneratingReport }"
-            >
-              {{ isGeneratingReport ? 'Generating...' : 'Generate Report' }}
-            </button>
-            <a
-              v-else
-              :href="reportUrl"
+              <button
+                v-if="!reportUrl"
+                @click="handleGenerateReport"
+                :disabled="!canGenerateReport || isGeneratingReport"
+                class="bg-[#21C063] hover:bg-[#16994A] text-white px-7 py-3 rounded-xl shadow-lg text-lg font-semibold transition disabled:cursor-not-allowed disabled:opacity-50 mb-4"
+                :class="{ 'animate-pulse': isGeneratingReport }"
+              >
+                {{ isGeneratingReport ? 'Generating...' : 'Generate Report' }}
+              </button>
+              <a
+                v-else
+                :href="reportUrl"
                 target="_blank"
                 rel="noopener"
-              download="vulnerability-report.pdf"
+                download="vulnerability-report.pdf"
                 class="bg-[#21C063] hover:bg-[#16994A] text-white px-10 py-4 rounded-xl shadow-lg text-xl font-semibold transition mb-4"
-            >
-              Download Report
-            </a>
+              >
+                Download Report
+              </a>
               <button
                 v-if="reportUrl"
                 @click="resetSearch"
@@ -315,7 +314,7 @@ const resetSearch = () => {
           </p>
         </div>
       </template>
-      </div>
+    </div>
     <!-- Legal links -->
     <div class="flex justify-center space-x-6 mt-8">
       <a href="/privacy" class="text-[#B0B3B8] underline hover:text-[#21C063] transition">Privacy Policy</a>

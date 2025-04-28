@@ -29,11 +29,11 @@ onMounted(() => {
   <div class="flex flex-col items-center justify-center min-h-screen bg-[#161717]" style="font-family: 'Roboto', sans-serif;">
     <div class="w-full max-w-2xl bg-[#23272F] rounded-3xl shadow-2xl p-16 flex flex-col items-center mt-24 mb-12 border border-[#23272F]">
       <img src="@/assets/vmlogo_green.svg" alt="VulneraMetrics Logo" class="h-20 w-auto mb-8" />
-      <h1 class="text-4xl font-bold text-white mb-4 text-center typewriter">
+      <h1 class="font-bold text-white mb-4 text-center typewriter text-lg sm:text-4xl whitespace-nowrap overflow-x-auto">
         {{ animatedTitle }}<span v-if="animatedTitle.length < fullTitle.length" class="typewriter-cursor">|</span>
       </h1>
       <p class="text-lg text-[#B0B3B8] mb-8 text-center">
-        VulneraMetrics is a cybersecurity tool to generate CVEs reports using Claude 3.7 Sonnet on AWS Bedrock. 
+        A cybersecurity tool to generate CVEs reports using Claude 3.7 Sonnet on AWS Bedrock. 
       </p>
       <RouterLink
         to="/generate-reports"
@@ -51,10 +51,9 @@ onMounted(() => {
 
 <style scoped>
 .typewriter {
-  min-height: 3.5rem;
+  min-height: 2.5rem;
   letter-spacing: 0.01em;
-  white-space: nowrap;
-  overflow: hidden;
+  overflow-x: auto;
 }
 .typewriter-cursor {
   display: inline-block;
