@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // src/views/GenerateReports.vue
-import { ref, computed, onUnmounted, watch } from 'vue';
+import { ref, computed, onUnmounted, watch, onMounted } from 'vue';
 import { useCreditsStore } from '@/stores/credits';
 import { apiService } from '@/services/api';
 import type { CveDetails, ApiError } from '@/types/api';
@@ -177,6 +177,12 @@ const resetSearch = () => {
   error.value = null;
   cveIdInput.value = '';
 };
+
+onMounted(() => {
+  if (authStore.isAuthenticated) {
+    creditsStore.fetchCredits();
+  }
+});
 </script>
 
 <template>
