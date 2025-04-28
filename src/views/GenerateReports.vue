@@ -248,33 +248,37 @@ const resetSearch = () => {
             <div class="bg-[#18181B] rounded-xl p-4 mb-6 shadow-sm border border-[#23272F] w-full">
               <h4 class="text-xl font-medium text-white mb-2 text-center">{{ cveDetails.id }}</h4>
               <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
-                <div class="bg-dark-card rounded-lg p-3">
-                  <h5 class="text-xs font-medium text-text-secondary mb-1">Published Date</h5>
-                  <p class="text-base font-semibold text-text-primary">
-                    {{ cveDetails.published ? new Date(cveDetails.published).toLocaleDateString() : 'Not specified' }}
-                  </p>
+                <div class="flex flex-col gap-3">
+                  <div class="bg-dark-card rounded-lg p-3">
+                    <h5 class="text-xs font-medium text-text-secondary mb-1">Published Date</h5>
+                    <p class="text-base font-semibold text-text-primary">
+                      {{ cveDetails.published ? new Date(cveDetails.published).toLocaleDateString() : 'Not specified' }}
+                    </p>
+                  </div>
+                  <div class="bg-dark-card rounded-lg p-3">
+                    <h5 class="text-xs font-medium text-text-secondary mb-1">Last Modified</h5>
+                    <p class="text-base font-semibold text-text-primary">
+                      {{ cveDetails.lastModified ? new Date(cveDetails.lastModified).toLocaleDateString() : 'Not specified' }}
+                    </p>
+                  </div>
                 </div>
-                <div class="bg-dark-card rounded-lg p-3">
-                  <h5 class="text-xs font-medium text-text-secondary mb-1">Status</h5>
-                  <p class="text-base font-semibold text-text-primary">
-                    {{ cveDetails.vulnStatus || cveDetails.status || 'Not specified' }}
-                  </p>
-                </div>
-                <div class="bg-dark-card rounded-lg p-3">
-                  <h5 class="text-xs font-medium text-text-secondary mb-1">CVSS Score</h5>
-                  <p class="text-base font-semibold" :class="{
-                    'text-error-text': cveDetails.cvssScore >= 7.0,
-                    'text-[#F59E42]': cveDetails.cvssScore >= 4.0 && cveDetails.cvssScore < 7.0,
-                    'text-[#21C063]': cveDetails.cvssScore < 4.0
-                  }">
-                    {{ cveDetails.cvssScore || 'Not specified' }}
-                  </p>
-                </div>
-                <div class="bg-dark-card rounded-lg p-3">
-                  <h5 class="text-xs font-medium text-text-secondary mb-1">Last Modified</h5>
-                  <p class="text-base font-semibold text-text-primary">
-                    {{ cveDetails.lastModified ? new Date(cveDetails.lastModified).toLocaleDateString() : 'Not specified' }}
-                  </p>
+                <div class="flex flex-col gap-3">
+                  <div class="bg-dark-card rounded-lg p-3">
+                    <h5 class="text-xs font-medium text-text-secondary mb-1">Status</h5>
+                    <p class="text-base font-semibold text-text-primary">
+                      {{ cveDetails.vulnStatus || cveDetails.status || 'Not specified' }}
+                    </p>
+                  </div>
+                  <div class="bg-dark-card rounded-lg p-3">
+                    <h5 class="text-xs font-medium text-text-secondary mb-1">CVSS Score</h5>
+                    <p class="text-base font-semibold" :class="{
+                      'text-error-text': (cveDetails.baseScore ?? 0) >= 7.0,
+                      'text-[#F59E42]': (cveDetails.baseScore ?? 0) >= 4.0 && (cveDetails.baseScore ?? 0) < 7.0,
+                      'text-[#21C063]': (cveDetails.baseScore ?? 0) < 4.0
+                    }">
+                      {{ cveDetails.baseScore ?? 'Not specified' }}
+                    </p>
+                  </div>
                 </div>
               </div>
               <div class="mb-3 flex items-center justify-between">
@@ -292,8 +296,6 @@ const resetSearch = () => {
                 <h5 class="text-xs font-medium text-text-secondary mb-1">Affected Products</h5>
                 <p class="text-base text-text-secondary">{{ cveDetails.affectedProducts }}</p>
               </div>
-              <!-- Debug: Show formatted JSON -->
-              <pre v-if="cveDetails" class="bg-[#23272F] text-xs text-[#38BDF8] rounded p-2 overflow-x-auto mt-2">{{ JSON.stringify(cveDetails, null, 2) }}</pre>
             </div>
             <div class="flex flex-col items-center w-full">
               <button
