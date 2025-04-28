@@ -122,6 +122,11 @@ function downloadJson() {
   }, 100);
 }
 
+// Helper to get CVSS baseScore from NVD structure
+const getBaseScore = (cve: any) => {
+  return cve?.metrics?.cvssMetricV31?.[0]?.cvssData?.baseScore ?? null;
+};
+
 // Handler for report generation
 const handleGenerateReport = async () => {
   if (!cveDetails.value || !hasEnoughCredits.value) return;
@@ -272,11 +277,11 @@ const resetSearch = () => {
                   <div class="bg-dark-card rounded-lg p-3">
                     <h5 class="text-xs font-medium text-text-secondary mb-1">CVSS Score</h5>
                     <p class="text-base font-semibold" :class="{
-                      'text-error-text': (cveDetails.baseScore ?? 0) >= 7.0,
-                      'text-[#F59E42]': (cveDetails.baseScore ?? 0) >= 4.0 && (cveDetails.baseScore ?? 0) < 7.0,
-                      'text-[#21C063]': (cveDetails.baseScore ?? 0) < 4.0
+                      'text-error-text': (getBaseScore(cveDetails) ?? 0) >= 7.0,
+                      'text-[#F59E42]': (getBaseScore(cveDetails) ?? 0) >= 4.0 && (getBaseScore(cveDetails) ?? 0) < 7.0,
+                      'text-[#21C063]': (getBaseScore(cveDetails) ?? 0) < 4.0
                     }">
-                      {{ cveDetails.baseScore ?? 'Not specified' }}
+                      {{ getBaseScore(cveDetails) ?? 'Not specified' }}
                     </p>
                   </div>
                 </div>
