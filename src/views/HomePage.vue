@@ -28,16 +28,16 @@ onMounted(() => {
 <template>
   <div class="flex flex-col items-center justify-center min-h-screen bg-[#161717]" style="font-family: 'Roboto', sans-serif;">
     <div class="w-full max-w-2xl bg-[#23272F] rounded-3xl shadow-2xl p-16 flex flex-col items-center mt-24 mb-12 border border-[#23272F]">
-      <img src="@/assets/vmlogo_white.svg" alt="VulneraMetrics Logo" class="h-20 w-auto mb-8" />
+      <img src="@/assets/vmlogo_green.svg" alt="VulneraMetrics Logo" class="h-20 w-auto mb-8" />
       <h1 class="text-4xl font-bold text-white mb-4 text-center typewriter">
         {{ animatedTitle }}<span v-if="animatedTitle.length < fullTitle.length" class="typewriter-cursor">|</span>
       </h1>
       <p class="text-lg text-[#B0B3B8] mb-8 text-center">
-        VulneraMetrics is a cybersecurity tool to generate detailed PDF reports on specific CVE using Claude 3.7 Sonnet on AWS Bedrock. 
+        VulneraMetrics is a cybersecurity tool to generate CVEs reports using Claude 3.7 Sonnet on AWS Bedrock. 
       </p>
       <RouterLink
         to="/generate-reports"
-        class="bg-primary hover:bg-primary-hover text-white px-10 py-4 rounded-xl shadow-lg text-xl font-semibold transition cta-glow"
+        class="bg-primary hover:bg-primary-hover text-white w-full max-w-xs sm:w-auto px-4 py-2 text-base sm:px-7 sm:py-3 sm:text-lg rounded-xl shadow-lg font-semibold transition cta-glow"
       >
         Search CVE
       </RouterLink>

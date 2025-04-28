@@ -156,7 +156,7 @@ const resetSearch = () => {
   <!-- NAVBAR -->
   <nav class="fixed top-0 left-0 w-full bg-[#161717] shadow z-50 flex items-center justify-between px-8 h-16" style="font-family: 'Roboto', sans-serif;">
     <a href="/" class="flex items-center">
-      <img src="@/assets/vmlogo_white.svg" alt="VulneraMetrics Logo" class="h-12 w-auto" />
+      <img src="@/assets/vmlogo_green.svg" alt="VulneraMetrics Logo" class="h-12 w-auto" />
     </a>
     <div v-if="authStore.isAuthenticated" class="flex items-center space-x-6">
       <span v-if="userName" class="text-white font-medium">Hi, {{ userName }}</span>
@@ -188,23 +188,23 @@ const resetSearch = () => {
           <p class="text-[#B0B3B8] mb-10 text-lg text-center">Please, enter a CVE ID (e.g., CVE-2024-1234) to generate an AI-powered report.</p>
         </template>
         <template v-if="!cveDetails">
-          <form class="flex flex-col sm:flex-row items-center justify-center w-full gap-4 mb-6" @submit.prevent="handleSearch">
-      <input
-        type="text"
-        v-model="cveIdInput"
+          <form class="flex flex-col sm:flex-row items-center justify-center w-full gap-4 mb-6 min-w-0" @submit.prevent="handleSearch">
+            <input
+              type="text"
+              v-model="cveIdInput"
               placeholder="CVE-2024-1234"
-              class="flex-grow rounded-xl border border-[#23272F] px-6 py-4 text-2xl text-white bg-[#18181B] focus:ring-2 focus:ring-[#21C063] focus:outline-none transition w-full sm:w-auto placeholder-[#B0B3B8]"
+              class="flex-grow min-w-0 rounded-xl border border-[#23272F] px-3 py-2 text-base sm:px-4 sm:py-3 sm:text-lg text-white bg-[#18181B] focus:ring-2 focus:ring-[#21C063] focus:outline-none transition w-full sm:w-auto placeholder-[#B0B3B8]"
               :disabled="!authStore.isAuthenticated"
-      />
-      <button
-        type="submit"
+            />
+            <button
+              type="submit"
               :disabled="isLoading || !isValidCveFormat(cveIdInput) || !authStore.isAuthenticated"
-              class="bg-[#21C063] hover:bg-[#16994A] text-white px-10 py-4 rounded-xl shadow-lg text-xl font-semibold transition disabled:cursor-not-allowed disabled:opacity-50"
-        :class="{ 'animate-pulse': isLoading }"
-      >
-        {{ isLoading ? 'Searching...' : 'Search' }}
-      </button>
-    </form>
+              class="bg-[#21C063] hover:bg-[#16994A] text-white px-4 py-2 text-base sm:px-7 sm:py-3 sm:text-lg rounded-xl shadow-lg font-semibold transition disabled:cursor-not-allowed disabled:opacity-50"
+              :class="{ 'animate-pulse': isLoading }"
+            >
+              {{ isLoading ? 'Searching...' : 'Search' }}
+            </button>
+          </form>
         </template>
         <div v-if="error" class="bg-[#2D1B1B] border border-[#EF4444] text-[#EF4444] rounded-lg p-3 mb-4 flex items-center space-x-2">
           <svg class="w-5 h-5 text-[#EF4444]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
