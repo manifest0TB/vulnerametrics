@@ -59,7 +59,6 @@ onUnmounted(() => {
 
 // Computed properties
 const hasEnoughCredits = computed(() => (creditsStore.credits ?? 0) > 0);
-const canGenerateReport = computed(() => cveDetails.value && hasEnoughCredits.value);
 
 const userName = computed(() => {
   // Try to get the nickname, otherwise the username
@@ -99,6 +98,29 @@ const handleSearch = async () => {
     isLoading.value = false;
   }
 };
+
+// Helper to get English or first description
+const getCveDescription = (cve: any) => {
+  if (!cve || !cve.descriptions) return '';
+  const en = cve.descriptions.find((d: any) => d.lang === 'en');
+  return en ? en.value : cve.descriptions[0]?.value || '';
+};
+
+// Helper to download JSON
+function downloadJson() {
+  if (!cveDetails.value) return;
+  const blob = new Blob([JSON.stringify(cveDetails.value, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${cveDetails.value.id || 'cve-details'}.json`;
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(() => {
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }, 100);
+}
 
 // Handler for report generation
 const handleGenerateReport = async () => {
@@ -225,22 +247,17 @@ const resetSearch = () => {
             <h3 class="text-3xl font-bold text-[#21C063] mb-6 text-center">Vulnerability Found</h3>
             <div class="bg-[#18181B] rounded-xl p-4 mb-6 shadow-sm border border-[#23272F] w-full">
               <h4 class="text-xl font-medium text-white mb-2 text-center">{{ cveDetails.id }}</h4>
-              <!-- Basic CVE Information -->
               <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
-                <div class="bg-dark-card rounded-lg p-3">
-                  <h5 class="text-xs font-medium text-text-secondary mb-1">Severity</h5>
-                  <p class="text-base font-semibold" :class="{
-                    'text-error-text': cveDetails.severity === 'HIGH' || cveDetails.severity === 'CRITICAL',
-                    'text-[#F59E42]': cveDetails.severity === 'MEDIUM',
-                    'text-[#21C063]': cveDetails.severity === 'LOW'
-                  }">
-                    {{ cveDetails.severity || 'Not specified' }}
-                  </p>
-                </div>
                 <div class="bg-dark-card rounded-lg p-3">
                   <h5 class="text-xs font-medium text-text-secondary mb-1">Published Date</h5>
                   <p class="text-base font-semibold text-text-primary">
-                    {{ cveDetails.publishedDate ? new Date(cveDetails.publishedDate).toLocaleDateString() : 'Not specified' }}
+                    {{ cveDetails.published ? new Date(cveDetails.published).toLocaleDateString() : 'Not specified' }}
+                  </p>
+                </div>
+                <div class="bg-dark-card rounded-lg p-3">
+                  <h5 class="text-xs font-medium text-text-secondary mb-1">Status</h5>
+                  <p class="text-base font-semibold text-text-primary">
+                    {{ cveDetails.vulnStatus || cveDetails.status || 'Not specified' }}
                   </p>
                 </div>
                 <div class="bg-dark-card rounded-lg p-3">
@@ -254,16 +271,21 @@ const resetSearch = () => {
                   </p>
                 </div>
                 <div class="bg-dark-card rounded-lg p-3">
-                  <h5 class="text-xs font-medium text-text-secondary mb-1">Status</h5>
+                  <h5 class="text-xs font-medium text-text-secondary mb-1">Last Modified</h5>
                   <p class="text-base font-semibold text-text-primary">
-                    {{ cveDetails.status || 'Not specified' }}
+                    {{ cveDetails.lastModified ? new Date(cveDetails.lastModified).toLocaleDateString() : 'Not specified' }}
                   </p>
                 </div>
               </div>
-              <!-- Description -->
-              <div class="mb-3">
-                <h5 class="text-xs font-medium text-text-secondary mb-1">Description</h5>
-                <p class="text-base text-text-secondary">{{ cveDetails.description }}</p>
+              <div class="mb-3 flex items-center justify-between">
+                <div>
+                  <h5 class="text-xs font-medium text-text-secondary mb-1">Description</h5>
+                  <p class="text-base text-text-secondary">{{ getCveDescription(cveDetails) }}</p>
+                </div>
+                <button @click="downloadJson" class="ml-2 px-2 py-1 rounded bg-[#23272F] hover:bg-[#18181B] text-[#38BDF8] text-xs flex items-center border border-[#23272F] shadow-sm transition-opacity opacity-70 hover:opacity-100" title="Download raw JSON">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="2" d="M12 4v12m0 0l-4-4m4 4l4-4"/><rect x="4" y="18" width="16" height="2" rx="1" fill="currentColor"/></svg>
+                  <span class="ml-1">JSON</span>
+                </button>
               </div>
               <!-- Additional Information -->
               <div v-if="cveDetails.affectedProducts" class="mb-3">
@@ -277,7 +299,7 @@ const resetSearch = () => {
               <button
                 v-if="!reportUrl"
                 @click="handleGenerateReport"
-                :disabled="!canGenerateReport || isGeneratingReport"
+                :disabled="!cveDetails || !hasEnoughCredits || isGeneratingReport"
                 class="bg-[#21C063] hover:bg-[#16994A] text-white px-7 py-3 rounded-xl shadow-lg text-lg font-semibold transition disabled:cursor-not-allowed disabled:opacity-50 mb-4"
                 :class="{ 'animate-pulse': isGeneratingReport }"
               >
