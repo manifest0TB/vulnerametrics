@@ -22,8 +22,9 @@ const reportUrl = ref<string | null>(null);
 
 // Message and animated color for report generation loading
 const loadingMessages = [
-  'Generating your report…',
+  'This will take a few seconds…',
   'AI is analyzing the vulnerability…',
+  'Generating your report…',
   'Almost there! Preparing your PDF…'
 ];
 const loadingColors = [
@@ -40,11 +41,12 @@ watch(
   (newVal) => {
     if (newVal) {
       let i = 0;
+      // 35 segundos dividido entre 4 mensajes = 8.75s por mensaje
       loadingInterval = window.setInterval(() => {
         i = (i + 1) % loadingMessages.length;
         loadingMessage.value = loadingMessages[i];
-        loadingColorClass.value = loadingColors[i];
-      }, 2000);
+        loadingColorClass.value = loadingColors[i % loadingColors.length];
+      }, 8750);
     } else if (loadingInterval) {
       clearInterval(loadingInterval);
       loadingInterval = null;
@@ -72,13 +74,13 @@ const userName = computed(() => {
 
 // Validation function for CVE ID format
 const isValidCveFormat = (cveId: string): boolean => {
-  return /^CVE-\d{4}-\d{4,}$/i.test(cveId);
+  return /^CVE-\d{4}-\d{4,6}$/i.test(cveId);
 };
 
 // Handler for CVE search
 const handleSearch = async () => {
   if (!isValidCveFormat(cveIdInput.value)) {
-    error.value = 'Invalid CVE format. Expected format: CVE-YYYY-NNNN...';
+    error.value = 'Invalid CVE format. Expected format: CVE-YYYY-NNNN';
     return;
   }
 
@@ -187,25 +189,25 @@ onMounted(() => {
 
 <template>
   <!-- NAVBAR -->
-  <nav class="fixed top-0 left-0 w-full bg-[#161717] shadow z-50 flex items-center justify-between px-8 h-16" style="font-family: 'Roboto', sans-serif;">
+  <nav class="fixed top-0 left-0 w-full bg-[#161717] shadow z-50 flex items-center justify-between px-4 sm:px-8 h-14 sm:h-16" style="font-family: 'Roboto', sans-serif;">
     <a href="/" class="flex items-center">
-      <img src="@/assets/vmlogo_green.svg" alt="VulneraMetrics Logo" class="h-12 w-auto" />
+      <img src="@/assets/vmlogo_green.svg" alt="VulneraMetrics Logo" class="h-8 sm:h-12 w-auto" />
     </a>
-    <div v-if="authStore.isAuthenticated" class="flex items-center space-x-6">
-      <span v-if="userName" class="text-white font-medium">Hi, {{ userName }}</span>
-      <span v-if="creditsStore.credits !== null" class="text-[#21C063] font-semibold">Credits: {{ creditsStore.credits ?? 0 }}</span>
-      <button @click="handleLogout" class="bg-error-text hover:bg-error-text/80 text-white px-4 py-2 rounded-lg shadow transition">Logout</button>
+    <div v-if="authStore.isAuthenticated" class="flex items-center space-x-3 sm:space-x-6">
+      <span v-if="userName" class="text-white font-medium text-sm sm:text-base">Hi, {{ userName }}</span>
+      <span v-if="creditsStore.credits !== null" class="text-[#21C063] font-semibold text-sm sm:text-base">Credits: {{ creditsStore.credits ?? 0 }}</span>
+      <button @click="handleLogout" class="bg-error-text hover:bg-error-text/80 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg shadow transition text-sm sm:text-base">Logout</button>
     </div>
-    <div v-else class="flex items-center space-x-4">
+    <div v-else class="flex items-center space-x-2 sm:space-x-4">
       <RouterLink
         to="/login"
-        class="bg-primary hover:bg-primary-hover text-white px-4 py-2 rounded-lg shadow transition"
+        class="bg-primary hover:bg-primary-hover text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg shadow transition text-sm sm:text-base"
       >
         Login
       </RouterLink>
       <RouterLink
         to="/register"
-        class="bg-dark-card hover:bg-dark-card/80 text-white px-4 py-2 rounded-lg shadow transition"
+        class="bg-dark-card hover:bg-dark-card/80 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg shadow transition text-sm sm:text-base"
       >
         Register
       </RouterLink>
@@ -213,47 +215,50 @@ onMounted(() => {
   </nav>
 
   <!-- MAIN CONTENT -->
-  <div class="pt-24 flex flex-col items-center min-h-screen bg-[#161717]" style="font-family: 'Roboto', sans-serif;">
-    <div class="w-full max-w-3xl bg-[#23272F] rounded-3xl shadow-2xl p-16 mb-12 border border-[#23272F] flex flex-col items-center">
+  <div class="pt-20 sm:pt-24 flex flex-col items-center min-h-screen bg-[#161717]" style="font-family: 'Roboto', sans-serif;">
+    <div class="w-full max-w-3xl bg-[#23272F] rounded-3xl shadow-2xl p-4 sm:p-16 mb-8 sm:mb-12 border border-[#23272F] flex flex-col items-center">
       <template v-if="authStore.isAuthenticated">
         <template v-if="!cveDetails && !isGeneratingReport">
-          <h2 class="text-4xl font-bold text-white mb-4 text-center">Search CVE</h2>
-          <p class="text-[#B0B3B8] mb-10 text-lg text-center">Enter a CVE ID to generate an AI-powered report.</p>
+          <h2 class="text-2xl sm:text-4xl font-bold text-white mb-3 sm:mb-4 text-center">Search CVE</h2>
+          <p class="text-[#B0B3B8] mb-6 sm:mb-10 text-base sm:text-lg text-center">Enter a CVE ID to generate an AI-powered report.</p>
         </template>
         <template v-if="!cveDetails">
-          <form class="flex flex-col sm:flex-row items-center justify-center w-full gap-4 mb-6 min-w-0" @submit.prevent="handleSearch">
+          <form class="flex flex-col sm:flex-row items-center justify-center w-full gap-3 sm:gap-4 mb-4 sm:mb-6 min-w-0" @submit.prevent="handleSearch">
             <input
               type="text"
               v-model="cveIdInput"
               placeholder="e.g., CVE-2024-1234"
-              class="flex-grow min-w-0 rounded-xl border border-[#23272F] px-3 py-2 text-base sm:px-4 sm:py-3 sm:text-lg text-white bg-[#18181B] focus:ring-2 focus:ring-[#21C063] focus:outline-none transition w-full sm:w-auto placeholder-[#B0B3B8]"
+              maxlength="15"
+              class="flex-grow min-w-0 rounded-xl border border-[#23272F] px-3 py-2 text-sm sm:text-base sm:px-4 sm:py-3 text-white bg-[#18181B] focus:ring-2 focus:ring-[#21C063] focus:outline-none transition w-full sm:w-auto placeholder-[#B0B3B8]"
               :disabled="!authStore.isAuthenticated"
             />
+            <p class="text-xs text-[#B0B3B8] mt-1 mb-2">Format: CVE-YYYY-NNNN</p>
             <button
               type="submit"
               :disabled="isLoading || !isValidCveFormat(cveIdInput) || !authStore.isAuthenticated"
-              class="bg-[#21C063] hover:bg-[#16994A] text-white px-4 py-2 text-base sm:px-7 sm:py-3 sm:text-lg rounded-xl shadow-lg font-semibold transition disabled:cursor-not-allowed disabled:opacity-50"
+              class="bg-[#21C063] hover:bg-[#16994A] text-white px-4 py-2 text-sm sm:text-base sm:px-7 sm:py-3 rounded-xl shadow-lg font-semibold transition disabled:cursor-not-allowed disabled:opacity-50 w-full sm:w-auto"
               :class="{ 'animate-pulse': isLoading }"
             >
               {{ isLoading ? 'Searching...' : 'Search' }}
             </button>
           </form>
         </template>
-        <div v-if="error" class="bg-[#2D1B1B] border border-[#EF4444] text-[#EF4444] rounded-lg p-3 mb-4 flex items-center space-x-2">
-          <svg class="w-5 h-5 text-[#EF4444]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        <div v-if="error" class="bg-[#2D1B1B] border border-[#EF4444] text-[#EF4444] rounded-lg p-3 mb-4 flex items-center space-x-2 text-sm sm:text-base">
+          <svg class="w-4 h-4 sm:w-5 sm:h-5 text-[#EF4444]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
           <span>{{ error }}</span>
         </div>
         <template v-if="cveDetails">
           <div class="flex flex-col items-center justify-center w-full relative">
             <!-- Overlay de carga animado -->
-            <div v-if="isGeneratingReport" class="absolute inset-0 flex flex-col items-center justify-center bg-[#23272F] bg-opacity-90 rounded-3xl z-10">
-              <svg class="animate-spin h-12 w-12 mb-4" :class="loadingColorClass" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
-              </svg>
-              <p :class="loadingColorClass" class="text-2xl font-semibold animate-pulse text-center">
-                {{ loadingMessage }}
-              </p>
+            <div v-if="isGeneratingReport" class="absolute inset-0 flex flex-col items-center justify-center bg-[#23272F] bg-opacity-95 rounded-3xl z-10 backdrop-blur-sm">
+              <div class="flex flex-col items-center justify-center p-6 sm:p-8 rounded-2xl bg-[#18181B] shadow-xl border border-[#23272F]">
+                <svg class="animate-spin h-10 w-10 sm:h-16 sm:w-16 mb-4 sm:mb-6" :class="loadingColorClass" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <p class="text-base sm:text-xl font-medium text-center max-w-xs sm:max-w-md" :class="loadingColorClass">{{ loadingMessage }}</p>
+                <p class="text-xs sm:text-sm text-[#B0B3B8] mt-2 sm:mt-3 text-center">This may take a few moments...</p>
+              </div>
             </div>
             <h3 class="text-3xl font-bold text-[#21C063] mb-6 text-center">Vulnerability Found</h3>
             <div class="bg-[#18181B] rounded-xl p-4 mb-6 shadow-sm border border-[#23272F] w-full">

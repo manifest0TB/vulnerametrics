@@ -58,16 +58,16 @@ const handleForgotPassword = async () => {
 </script>
 
 <template>
-  <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 bg-[#161717]" style="font-family: 'Roboto', sans-serif;">
-    <div class="sm:mx-auto sm:w-full sm:max-w-md bg-[#23272F] rounded-2xl shadow-lg p-10">
-      <h2 class="text-center text-3xl font-bold text-white mb-4">Reset your password</h2>
-      <p class="text-center text-sm text-[#B0B3B8] mb-8">
+  <div class="flex min-h-full flex-col justify-center px-4 sm:px-6 py-6 sm:py-12 lg:px-8 bg-[#161717]" style="font-family: 'Roboto', sans-serif;">
+    <div class="sm:mx-auto sm:w-full sm:max-w-md bg-[#23272F] rounded-2xl shadow-lg p-6 sm:p-10">
+      <h2 class="text-center text-2xl sm:text-3xl font-bold text-white mb-3 sm:mb-4">Reset your password</h2>
+      <p class="text-center text-xs sm:text-sm text-[#B0B3B8] mb-6 sm:mb-8">
         Enter your email address and we'll send you a code to reset your password.
       </p>
-      <form class="space-y-6" @submit.prevent="handleForgotPassword">
+      <form class="space-y-4 sm:space-y-6" @submit.prevent="handleForgotPassword">
         <div>
-          <label for="email" class="block text-sm font-medium text-[#B0B3B8]">Email address</label>
-          <div class="mt-2">
+          <label for="email" class="block text-xs sm:text-sm font-medium text-[#B0B3B8]">Email address</label>
+          <div class="mt-1 sm:mt-2">
             <input
               id="email"
               name="email"
@@ -77,15 +77,15 @@ const handleForgotPassword = async () => {
               required
               maxlength="254"
               :pattern="emailPattern"
-              class="block w-full rounded-md border-0 px-3 py-2 text-white bg-[#18181B] shadow-sm ring-1 ring-inset ring-[#23272F] placeholder:text-[#B0B3B8] focus:ring-2 focus:ring-inset focus:ring-[#21C063] focus:outline-none sm:text-base"
+              class="block w-full rounded-md border-0 px-3 py-2 text-sm sm:text-base text-white bg-[#18181B] shadow-sm ring-1 ring-inset ring-[#23272F] placeholder:text-[#B0B3B8] focus:ring-2 focus:ring-inset focus:ring-[#21C063] focus:outline-none"
             />
           </div>
           <!-- Validation error message -->
-          <p v-if="validationError" class="mt-2 text-sm text-[#EF4444]">
+          <p v-if="validationError" class="mt-1 sm:mt-2 text-xs sm:text-sm text-[#EF4444]">
             {{ validationError }}
           </p>
         </div>
-        <div v-if="errorMessage" class="text-center text-sm" :class="{
+        <div v-if="errorMessage" class="text-center text-xs sm:text-sm" :class="{
           'text-[#EF4444]': !errorMessage.includes('If an account exists'),
           'text-[#38BDF8]': errorMessage.includes('If an account exists')
         }">
@@ -95,14 +95,14 @@ const handleForgotPassword = async () => {
           <button
             type="submit"
             :disabled="isLoading"
-            class="flex w-full justify-center rounded-md bg-[#21C063] px-3 py-2 text-base font-semibold text-white shadow-sm transition-colors hover:bg-[#16994A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#21C063] disabled:cursor-not-allowed disabled:opacity-50"
+            class="flex w-full justify-center rounded-md bg-[#21C063] px-3 py-2 text-sm sm:text-base font-semibold text-white shadow-sm transition-colors hover:bg-[#16994A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#21C063] disabled:cursor-not-allowed disabled:opacity-50"
             :class="{ 'animate-pulse': isLoading }"
           >
             {{ isLoading ? 'Sending...' : 'Send Reset Code' }}
           </button>
         </div>
       </form>
-      <p class="mt-10 text-center text-sm text-[#B0B3B8]">
+      <p class="mt-6 sm:mt-10 text-center text-xs sm:text-sm text-[#B0B3B8]">
         Remember your password?
         <RouterLink
           to="/login"

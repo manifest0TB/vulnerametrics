@@ -26,25 +26,25 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="flex flex-col items-center justify-center min-h-screen bg-[#161717]" style="font-family: 'Roboto', sans-serif;">
-    <div class="w-full max-w-2xl bg-[#23272F] rounded-3xl shadow-2xl p-16 flex flex-col items-center mt-24 mb-12 border border-[#23272F]">
-      <img src="@/assets/vmlogo_green.svg" alt="VulneraMetrics Logo" class="h-20 w-auto mb-8" />
-      <h1 class="font-bold text-white mb-4 text-center typewriter text-lg sm:text-4xl whitespace-nowrap overflow-x-auto">
+  <div class="flex flex-col items-center justify-center min-h-screen bg-[#161717] px-4 sm:px-2" style="font-family: 'Roboto', sans-serif;">
+    <div class="w-full max-w-2xl bg-[#23272F] rounded-3xl shadow-2xl p-4 sm:p-16 flex flex-col items-center mt-8 sm:mt-24 mb-6 sm:mb-12 border border-[#23272F] gap-3 sm:gap-8">
+      <img src="@/assets/vmlogo_green.svg" alt="VulneraMetrics Logo" class="h-12 sm:h-20 w-auto mb-4 sm:mb-8" />
+      <h1 class="font-bold text-white mb-2 sm:mb-4 text-center typewriter text-base sm:text-4xl whitespace-nowrap overflow-x-auto">
         {{ animatedTitle }}<span v-if="animatedTitle.length < fullTitle.length" class="typewriter-cursor">|</span>
       </h1>
-      <p class="text-lg text-[#B0B3B8] mb-8 text-center">
+      <p class="text-sm sm:text-lg text-[#B0B3B8] mb-4 sm:mb-8 text-center">
         A cybersecurity tool to generate CVEs reports using Claude 3.7 Sonnet on AWS Bedrock. 
       </p>
       <RouterLink
         to="/generate-reports"
-        class="bg-primary hover:bg-primary-hover text-white w-full max-w-xs sm:w-auto px-4 py-2 text-base sm:px-7 sm:py-3 sm:text-lg rounded-xl shadow-lg font-semibold transition cta-glow"
+        class="bg-primary hover:bg-primary-hover text-white w-full max-w-xs sm:w-auto px-4 py-2 text-sm sm:text-lg rounded-xl shadow-lg font-semibold transition cta-glow"
       >
         Search CVE
       </RouterLink>
     </div>
-    <div class="flex justify-center space-x-6 mt-8">
-      <RouterLink to="/privacy" class="text-[#B0B3B8] underline hover:text-[#21C063] transition">Privacy Policy</RouterLink>
-      <RouterLink to="/terms" class="text-[#B0B3B8] underline hover:text-[#21C063] transition">Terms of Service</RouterLink>
+    <div class="flex flex-col sm:flex-row justify-center items-center space-y-2 sm:space-y-0 sm:space-x-6 mt-4 sm:mt-8 w-full">
+      <RouterLink to="/privacy" class="text-[#B0B3B8] underline hover:text-[#21C063] transition text-sm sm:text-base">Privacy Policy</RouterLink>
+      <RouterLink to="/terms" class="text-[#B0B3B8] underline hover:text-[#21C063] transition text-sm sm:text-base">Terms of Service</RouterLink>
     </div>
   </div>
 </template>

@@ -49,13 +49,13 @@ const handleLogin = async () => {
 </script>
 
 <template>
-  <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 bg-[#161717]" style="font-family: 'Roboto', sans-serif;">
-    <div class="sm:mx-auto sm:w-full sm:max-w-md bg-[#23272F] rounded-2xl shadow-lg p-10">
-      <h2 class="text-center text-3xl font-bold text-white mb-6">Sign in to your account</h2>
-      <form class="space-y-6" @submit.prevent="handleLogin">
+  <div class="flex min-h-full flex-col justify-center px-4 sm:px-6 py-6 sm:py-12 lg:px-8 bg-[#161717]" style="font-family: 'Roboto', sans-serif;">
+    <div class="sm:mx-auto sm:w-full sm:max-w-md bg-[#23272F] rounded-2xl shadow-lg p-6 sm:p-10">
+      <h2 class="text-center text-2xl sm:text-3xl font-bold text-white mb-4 sm:mb-6">Sign in to your account</h2>
+      <form class="space-y-4 sm:space-y-6" @submit.prevent="handleLogin">
         <div>
           <label for="email" class="block text-sm font-medium text-[#B0B3B8]">Email address</label>
-          <div class="mt-2">
+          <div class="mt-1 sm:mt-2">
             <input
               id="email"
               name="email"
@@ -63,13 +63,13 @@ const handleLogin = async () => {
               v-model="email"
               autocomplete="email"
               required
-              class="block w-full rounded-md border-0 px-3 py-2 text-white bg-[#18181B] shadow-sm ring-1 ring-inset ring-[#23272F] placeholder:text-[#B0B3B8] focus:ring-2 focus:ring-inset focus:ring-[#21C063] focus:outline-none sm:text-base"
+              class="block w-full rounded-md border-0 px-3 py-2 text-sm sm:text-base text-white bg-[#18181B] shadow-sm ring-1 ring-inset ring-[#23272F] placeholder:text-[#B0B3B8] focus:ring-2 focus:ring-inset focus:ring-[#21C063] focus:outline-none"
             />
           </div>
         </div>
         <div>
           <label for="password" class="block text-sm font-medium text-[#B0B3B8]">Password</label>
-          <div class="relative mt-2">
+          <div class="relative mt-1 sm:mt-2">
             <input
               id="password"
               name="password"
@@ -77,12 +77,12 @@ const handleLogin = async () => {
               v-model="password"
               autocomplete="current-password"
               required
-              class="block w-full rounded-md border-0 px-3 py-2 pr-10 text-white bg-[#18181B] shadow-sm ring-1 ring-inset ring-[#23272F] placeholder:text-[#B0B3B8] focus:ring-2 focus:ring-inset focus:ring-[#21C063] focus:outline-none sm:text-base"
+              class="block w-full rounded-md border-0 px-3 py-2 pr-10 text-sm sm:text-base text-white bg-[#18181B] shadow-sm ring-1 ring-inset ring-[#23272F] placeholder:text-[#B0B3B8] focus:ring-2 focus:ring-inset focus:ring-[#21C063] focus:outline-none"
             />
             <button
               type="button"
               @click="togglePasswordVisibility"
-              class="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5 text-[#B0B3B8] hover:text-[#21C063] focus:outline-none"
+              class="absolute inset-y-0 right-0 flex items-center pr-3 text-xs sm:text-sm leading-5 text-[#B0B3B8] hover:text-[#21C063] focus:outline-none"
             >
               {{ isPasswordVisible ? 'Hide' : 'Show' }}
             </button>
@@ -91,26 +91,26 @@ const handleLogin = async () => {
         <div class="flex items-center justify-between">
           <RouterLink
             to="/forgot-password"
-            class="text-sm font-medium text-[#B0B3B8] hover:text-[#21C063]"
+            class="text-xs sm:text-sm font-medium text-[#B0B3B8] hover:text-[#21C063]"
           >
             Forgot your password?
           </RouterLink>
         </div>
-        <div v-if="loginError" class="text-center text-sm mt-2 text-error-text">
+        <div v-if="loginError" class="text-center text-xs sm:text-sm mt-2 text-error-text">
           {{ loginError }}
         </div>
         <div>
           <button
             type="submit"
             :disabled="isLoading"
-            class="flex w-full justify-center rounded-md bg-[#21C063] px-3 py-2 text-base font-semibold text-white shadow-sm transition-colors hover:bg-[#16994A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#21C063] disabled:cursor-not-allowed disabled:opacity-50"
+            class="flex w-full justify-center rounded-md bg-[#21C063] px-3 py-2 text-sm sm:text-base font-semibold text-white shadow-sm transition-colors hover:bg-[#16994A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#21C063] disabled:cursor-not-allowed disabled:opacity-50"
             :class="{ 'animate-pulse': isLoading }"
           >
             {{ isLoading ? 'Signing in...' : 'Sign in' }}
           </button>
         </div>
       </form>
-      <p class="mt-10 text-center text-sm text-[#B0B3B8]">
+      <p class="mt-6 sm:mt-10 text-center text-xs sm:text-sm text-[#B0B3B8]">
         Not a member?
         <RouterLink
           :to="{ name: 'Register', query: route.query.redirect ? { redirect: route.query.redirect } : undefined }"

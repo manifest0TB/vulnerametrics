@@ -9,16 +9,16 @@ const goHome = () => {
 </script>
 
 <template>
-  <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 bg-[#161717]" style="font-family: 'Roboto', sans-serif;">
-    <div class="sm:mx-auto sm:w-full sm:max-w-md bg-[#23272F] rounded-2xl shadow-lg p-10 text-center">
-      <h1 class="text-9xl font-bold text-[#21C063] mb-4">404</h1>
-      <h2 class="text-3xl font-bold text-white mb-4">Page Not Found</h2>
-      <p class="text-[#B0B3B8] mb-8">
+  <div class="flex min-h-full flex-col justify-center px-4 sm:px-6 py-6 sm:py-12 lg:px-8 bg-[#161717]" style="font-family: 'Roboto', sans-serif;">
+    <div class="sm:mx-auto sm:w-full sm:max-w-md bg-[#23272F] rounded-2xl shadow-lg p-6 sm:p-10 text-center">
+      <h1 class="text-6xl sm:text-9xl font-bold text-[#21C063] mb-3 sm:mb-4">404</h1>
+      <h2 class="text-2xl sm:text-3xl font-bold text-white mb-3 sm:mb-4">Page Not Found</h2>
+      <p class="text-xs sm:text-sm text-[#B0B3B8] mb-6 sm:mb-8">
         The page you're looking for doesn't exist or has been moved.
       </p>
       <button
         @click="goHome"
-        class="bg-[#21C063] hover:bg-[#16994A] text-white px-8 py-3 rounded-xl text-lg font-medium shadow transition"
+        class="bg-[#21C063] hover:bg-[#16994A] text-white px-6 sm:px-8 py-2 sm:py-3 rounded-xl text-sm sm:text-lg font-medium shadow transition"
       >
         Return to Home
       </button>

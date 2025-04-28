@@ -129,13 +129,13 @@ const handleRegister = async () => {
 </script>
 
 <template>
-  <div class="flex min-h-full flex-col px-6 py-8 lg:px-8 bg-[#161717]" style="font-family: 'Roboto', sans-serif;">
-    <div class="sm:mx-auto sm:w-full sm:max-w-md bg-[#23272F] rounded-2xl shadow-lg p-10">
-      <h2 class="text-center text-3xl font-bold text-white mb-6">Create your account</h2>
-      <form class="space-y-6" @submit.prevent="handleRegister">
+  <div class="flex min-h-full flex-col px-4 sm:px-6 py-6 sm:py-8 lg:px-8 bg-[#161717]" style="font-family: 'Roboto', sans-serif;">
+    <div class="sm:mx-auto sm:w-full sm:max-w-md bg-[#23272F] rounded-2xl shadow-lg p-6 sm:p-10">
+      <h2 class="text-center text-2xl sm:text-3xl font-bold text-white mb-4 sm:mb-6">Create your account</h2>
+      <form class="space-y-4 sm:space-y-6" @submit.prevent="handleRegister">
         <div>
           <label for="nickname" class="block text-sm font-medium text-[#B0B3B8]">Nickname</label>
-          <div class="mt-2">
+          <div class="mt-1 sm:mt-2">
             <input
               id="nickname"
               name="nickname"
@@ -145,10 +145,10 @@ const handleRegister = async () => {
               minlength="4"
               maxlength="20"
               pattern="[a-zA-Z0-9_-]*"
-              class="block w-full rounded-md border-0 px-3 py-2 text-white bg-[#18181B] shadow-sm ring-1 ring-inset ring-[#23272F] placeholder:text-[#B0B3B8] focus:ring-2 focus:ring-inset focus:ring-[#21C063] focus:outline-none sm:text-base"
+              class="block w-full rounded-md border-0 px-3 py-2 text-sm sm:text-base text-white bg-[#18181B] shadow-sm ring-1 ring-inset ring-[#23272F] placeholder:text-[#B0B3B8] focus:ring-2 focus:ring-inset focus:ring-[#21C063] focus:outline-none"
             />
           </div>
-          <p v-if="validationErrors.nickname" class="mt-2 text-sm text-[#EF4444]">
+          <p v-if="validationErrors.nickname" class="mt-1 sm:mt-2 text-xs sm:text-sm text-[#EF4444]">
             {{ validationErrors.nickname }}
           </p>
           <p class="mt-1 text-xs text-[#B0B3B8]">
@@ -157,7 +157,7 @@ const handleRegister = async () => {
         </div>
         <div>
           <label for="email" class="block text-sm font-medium text-[#B0B3B8]">Email address</label>
-          <div class="mt-2">
+          <div class="mt-1 sm:mt-2">
             <input
               id="email"
               name="email"
@@ -167,16 +167,16 @@ const handleRegister = async () => {
               required
               maxlength="254"
               :pattern="emailPattern"
-              class="block w-full rounded-md border-0 px-3 py-2 text-white bg-[#18181B] shadow-sm ring-1 ring-inset ring-[#23272F] placeholder:text-[#B0B3B8] focus:ring-2 focus:ring-inset focus:ring-[#21C063] focus:outline-none sm:text-base"
+              class="block w-full rounded-md border-0 px-3 py-2 text-sm sm:text-base text-white bg-[#18181B] shadow-sm ring-1 ring-inset ring-[#23272F] placeholder:text-[#B0B3B8] focus:ring-2 focus:ring-inset focus:ring-[#21C063] focus:outline-none"
             />
           </div>
-          <p v-if="validationErrors.email" class="mt-2 text-sm text-[#EF4444]">
+          <p v-if="validationErrors.email" class="mt-1 sm:mt-2 text-xs sm:text-sm text-[#EF4444]">
             {{ validationErrors.email }}
           </p>
         </div>
         <div>
           <label for="password" class="block text-sm font-medium text-[#B0B3B8]">Password</label>
-          <div class="relative mt-2">
+          <div class="relative mt-1 sm:mt-2">
             <input
               id="password"
               name="password"
@@ -185,26 +185,26 @@ const handleRegister = async () => {
               required
               maxlength="256"
               pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).{8,}$"
-              class="block w-full rounded-md border-0 px-3 py-2 pr-10 text-white bg-[#18181B] shadow-sm ring-1 ring-inset ring-[#23272F] placeholder:text-[#B0B3B8] focus:ring-2 focus:ring-inset focus:ring-[#21C063] focus:outline-none sm:text-base"
+              class="block w-full rounded-md border-0 px-3 py-2 pr-10 text-sm sm:text-base text-white bg-[#18181B] shadow-sm ring-1 ring-inset ring-[#23272F] placeholder:text-[#B0B3B8] focus:ring-2 focus:ring-inset focus:ring-[#21C063] focus:outline-none"
             />
             <button
               type="button"
               @click="togglePasswordVisibility"
-              class="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5 text-[#B0B3B8] hover:text-[#21C063] focus:outline-none"
+              class="absolute inset-y-0 right-0 flex items-center pr-3 text-xs sm:text-sm leading-5 text-[#B0B3B8] hover:text-[#21C063] focus:outline-none"
             >
               {{ isPasswordVisible ? 'Hide' : 'Show' }}
             </button>
           </div>
-          <p v-if="validationErrors.password" class="mt-2 text-sm text-[#EF4444]">
+          <p v-if="validationErrors.password" class="mt-1 sm:mt-2 text-xs sm:text-sm text-[#EF4444]">
             {{ validationErrors.password }}
           </p>
         </div>
         <div class="mt-2 space-y-1">
-          <p class="text-sm font-medium text-[#B0B3B8]">Password requirements:</p>
+          <p class="text-xs sm:text-sm font-medium text-[#B0B3B8]">Password requirements:</p>
           <ul class="text-xs text-[#B0B3B8] space-y-1">
             <li v-for="(rule, idx) in passwordRules" :key="rule.label" class="flex items-center gap-2">
               <span :class="passwordStatus[idx] ? 'text-[#21C063]' : 'text-[#EF4444]'">
-                <svg v-if="password" :class="passwordStatus[idx] ? '' : 'opacity-40'" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24"><path v-if="passwordStatus[idx]" stroke="currentColor" stroke-width="2" d="M5 13l4 4L19 7"/><circle v-else stroke="currentColor" stroke-width="2" cx="12" cy="12" r="7"/></svg>
+                <svg v-if="password" :class="passwordStatus[idx] ? '' : 'opacity-40'" xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24"><path v-if="passwordStatus[idx]" stroke="currentColor" stroke-width="2" d="M5 13l4 4L19 7"/><circle v-else stroke="currentColor" stroke-width="2" cx="12" cy="12" r="7"/></svg>
               </span>
               <span :class="passwordStatus[idx] ? 'text-[#21C063]' : ''">{{ rule.label }}</span>
             </li>
@@ -212,7 +212,7 @@ const handleRegister = async () => {
         </div>
         <div>
           <label for="confirmPassword" class="block text-sm font-medium text-[#B0B3B8]">Confirm Password</label>
-          <div class="mt-2">
+          <div class="mt-1 sm:mt-2">
             <input
               id="confirmPassword"
               name="confirmPassword"
@@ -220,49 +220,49 @@ const handleRegister = async () => {
               v-model="confirmPassword"
               required
               maxlength="256"
-              class="block w-full rounded-md border-0 px-3 py-2 text-white bg-[#18181B] shadow-sm ring-1 ring-inset ring-[#23272F] placeholder:text-[#B0B3B8] focus:ring-2 focus:ring-inset focus:ring-[#21C063] focus:outline-none sm:text-base"
+              class="block w-full rounded-md border-0 px-3 py-2 text-sm sm:text-base text-white bg-[#18181B] shadow-sm ring-1 ring-inset ring-[#23272F] placeholder:text-[#B0B3B8] focus:ring-2 focus:ring-inset focus:ring-[#21C063] focus:outline-none"
             />
           </div>
-          <p v-if="passwordMismatch" class="mt-2 text-sm text-[#EF4444]">
+          <p v-if="passwordMismatch" class="mt-1 sm:mt-2 text-xs sm:text-sm text-[#EF4444]">
             Passwords do not match
           </p>
         </div>
         <div class="flex flex-col items-start space-y-2 mt-4">
-          <label class="flex items-center gap-2 text-sm text-[#B0B3B8]">
-            <input type="checkbox" v-model="acceptTerms" required class="h-4 w-4 accent-[#21C063]" />
+          <label class="flex items-center gap-2 text-xs sm:text-sm text-[#B0B3B8]">
+            <input type="checkbox" v-model="acceptTerms" required class="h-3 w-3 sm:h-4 sm:w-4 accent-[#21C063]" />
             I accept the
             <RouterLink to="/terms" class="underline hover:text-[#21C063] ml-1">Terms of Service</RouterLink>
           </label>
-          <label class="flex items-center gap-2 text-sm text-[#B0B3B8]">
-            <input type="checkbox" v-model="acceptPrivacy" required class="h-4 w-4 accent-[#21C063]" />
+          <label class="flex items-center gap-2 text-xs sm:text-sm text-[#B0B3B8]">
+            <input type="checkbox" v-model="acceptPrivacy" required class="h-3 w-3 sm:h-4 sm:w-4 accent-[#21C063]" />
             I accept the
             <RouterLink to="/privacy" class="underline hover:text-[#21C063] ml-1">Privacy Policy</RouterLink>
           </label>
         </div>
-        <p v-if="validationErrors.terms" class="mt-2 text-sm text-[#EF4444]">
+        <p v-if="validationErrors.terms" class="mt-1 sm:mt-2 text-xs sm:text-sm text-[#EF4444]">
           {{ validationErrors.terms }}
         </p>
-        <div v-if="errorMessage && !passwordMismatch" class="text-center text-sm text-[#EF4444]">
+        <div v-if="errorMessage && !passwordMismatch" class="text-center text-xs sm:text-sm text-[#EF4444]">
           {{ errorMessage }}
         </div>
         <div>
           <button
             type="submit"
             :disabled="isLoading"
-            class="flex w-full justify-center rounded-md bg-[#21C063] px-3 py-2 text-base font-semibold text-white shadow-sm transition-colors hover:bg-[#16994A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#21C063] disabled:cursor-not-allowed disabled:opacity-50"
+            class="flex w-full justify-center rounded-md bg-[#21C063] px-3 py-2 text-sm sm:text-base font-semibold text-white shadow-sm transition-colors hover:bg-[#16994A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#21C063] disabled:cursor-not-allowed disabled:opacity-50"
             :class="{ 'animate-pulse': isLoading }"
           >
-            {{ isLoading ? 'Registering...' : 'Register' }}
+            {{ isLoading ? 'Creating account...' : 'Create account' }}
           </button>
         </div>
       </form>
-      <p class="mt-10 text-center text-sm text-[#B0B3B8]">
+      <p class="mt-6 sm:mt-10 text-center text-xs sm:text-sm text-[#B0B3B8]">
         Already have an account?
         <RouterLink
           :to="{ name: 'Login', query: route.query.redirect ? { redirect: route.query.redirect } : undefined }"
           class="font-semibold text-[#21C063] hover:underline"
         >
-          Sign in here
+          Sign in
         </RouterLink>
       </p>
     </div>
