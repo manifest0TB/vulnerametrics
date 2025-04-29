@@ -20,7 +20,7 @@ const cveDetails = ref<CveDetails | null>(null);
 const isGeneratingReport = ref(false);
 const reportUrl = ref<string | null>(null);
 
-// Loading messages and colors for report generation progress
+// Loading messages for report generation progress
 const loadingMessages = [
   'Initializing analysis...',
   'AI is analyzing the vulnerability...',
@@ -28,11 +28,11 @@ const loadingMessages = [
   'Finalizing PDF report...'
 ];
 
-// Progressive colors from darker to brighter green to show progress
+// Progressive colors from neutral to brand color showing progress
 const loadingColors = [
-  'text-[#0D4D2A]',  // Darker shade of green
-  'text-[#16994A]',  // Medium dark green
-  'text-[#1DB863]',  // Medium bright green
+  'text-[#4B5563]',  // Neutral gray
+  'text-[#38BDF8]',  // Bright blue
+  'text-[#16994A]',  // Medium green
   'text-[#21C063]'   // Our primary bright green
 ];
 
@@ -45,13 +45,13 @@ watch(
   (newVal) => {
     if (newVal) {
       let i = 0;
-      // Distribute 4 messages over 16 seconds = 4s per message
-      // This provides a smooth loading experience while covering the actual generation time (~12-14s)
+      // Distribute 4 messages over 19 seconds = 4.75s per message
+      // This provides a smooth loading experience while covering the actual generation time
       loadingInterval = window.setInterval(() => {
         i = (i + 1) % loadingMessages.length;
         loadingMessage.value = loadingMessages[i];
         loadingColorClass.value = loadingColors[i % loadingColors.length];
-      }, 4000);
+      }, 4750);
     } else if (loadingInterval) {
       clearInterval(loadingInterval);
       loadingInterval = null;
