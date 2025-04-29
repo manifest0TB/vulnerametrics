@@ -22,8 +22,8 @@ const reportUrl = ref<string | null>(null);
 
 // Loading messages for report generation progress
 const loadingMessages = [
-  'Initializing analysis...',
-  'AI is analyzing the vulnerability...',
+  'Processing CVE data...',
+  'Analyzing the CVE...',
   'Generating your report...',
   'Finalizing PDF report...'
 ];
@@ -38,7 +38,7 @@ const loadingColors = [
 
 const loadingMessage = ref(loadingMessages[0]);
 const loadingColorClass = ref(loadingColors[0]);
-let loadingInterval: number | null = null;
+let loadingInterval: number | undefined = undefined;
 
 watch(
   () => isGeneratingReport.value,
@@ -46,15 +46,28 @@ watch(
     if (newVal) {
       let i = 0;
       // Distribute 4 messages over 19 seconds = 4.75s per message
-      // This provides a smooth loading experience while covering the actual generation time
       loadingInterval = window.setInterval(() => {
-        i = (i + 1) % loadingMessages.length;
-        loadingMessage.value = loadingMessages[i];
-        loadingColorClass.value = loadingColors[i % loadingColors.length];
+        if (i < loadingMessages.length - 1) {
+          i++;
+          loadingMessage.value = loadingMessages[i];
+          loadingColorClass.value = loadingColors[i];
+        } else {
+          // Clear the interval when we reach the last message
+          if (loadingInterval) {
+            clearInterval(loadingInterval);
+            loadingInterval = undefined;
+          }
+        }
       }, 4750);
-    } else if (loadingInterval) {
-      clearInterval(loadingInterval);
-      loadingInterval = null;
+      // Set initial message
+      loadingMessage.value = loadingMessages[0];
+      loadingColorClass.value = loadingColors[0];
+    } else {
+      if (loadingInterval) {
+        clearInterval(loadingInterval);
+        loadingInterval = undefined;
+      }
+      // Reset to first message when loading stops
       loadingMessage.value = loadingMessages[0];
       loadingColorClass.value = loadingColors[0];
     }
