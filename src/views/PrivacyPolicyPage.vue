@@ -8,6 +8,15 @@
       <h1 class="mb-6 sm:mb-8 text-center text-2xl sm:text-3xl font-semibold text-white">
         Privacy Policy
       </h1>
+      <RouterLink
+        to="/"
+        class="bg-primary hover:bg-primary-hover text-white px-4 py-2 rounded-xl shadow-lg font-semibold transition flex items-center justify-center mx-auto mb-4"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7m-9 2v8m4-8v8m5 0a2 2 0 002-2v-7a2 2 0 00-.59-1.41l-7-7a2 2 0 00-2.82 0l-7 7A2 2 0 003 12v7a2 2 0 002 2h3" />
+        </svg>
+        Home
+      </RouterLink>
 
       <div class="space-y-4 sm:space-y-6 text-[#B0B3B8]">
         <section class="rounded-lg bg-[#23272F] p-4 sm:p-6 shadow-sm">

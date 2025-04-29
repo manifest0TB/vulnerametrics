@@ -8,6 +8,15 @@
       <h1 class="mb-6 sm:mb-8 text-center text-2xl sm:text-3xl font-semibold text-white">
         Terms of Service
       </h1>
+      <RouterLink
+        to="/"
+        class="bg-primary hover:bg-primary-hover text-white px-4 py-2 rounded-xl shadow-lg font-semibold transition flex items-center justify-center mx-auto mb-4"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7m-9 2v8m4-8v8m5 0a2 2 0 002-2v-7a2 2 0 00-.59-1.41l-7-7a2 2 0 00-2.82 0l-7 7A2 2 0 003 12v7a2 2 0 002 2h3" />
+        </svg>
+        Home
+      </RouterLink>
 
       <div class="space-y-4 sm:space-y-6 text-[#B0B3B8]">
         <section class="rounded-lg bg-[#23272F] p-4 sm:p-6 shadow-sm">
@@ -20,14 +29,14 @@
         <section class="rounded-lg bg-[#23272F] p-4 sm:p-6 shadow-sm">
           <h2 class="mb-3 sm:mb-4 text-lg sm:text-xl font-semibold text-white">2. Use License</h2>
           <p class="mb-3 sm:mb-4 text-xs sm:text-sm">
-            Permission is granted to temporarily use VulneraMetrics for personal, non-commercial purposes. This is the grant of a license, not a transfer of title, and under this license you may not:
+            VulneraMetrics offers you a permissive license to use, modify, and share any reports or materials generated on our platform, for both personal and commercial purposes—provided your use is responsible, ethical, and not intended to harm others or organizations. Please note: all use must also comply with the <a href="https://www-cdn.anthropic.com/6b68a6508f0210c5fe08f0199caa05c4ee6fb4dc/Anthropic-on-Bedrock-Commercial-Terms-of-Service_Dec_2023.pdf" target="_blank" class="underline text-[#21C063]">Anthropic on Bedrock Commercial Terms of Service</a>.
           </p>
           <ul class="list-inside list-disc space-y-1 sm:space-y-2 pl-4 text-xs sm:text-sm">
-            <li>Modify or copy the materials</li>
-            <li>Use the materials for any commercial purpose</li>
-            <li>Attempt to decompile or reverse engineer any software contained on VulneraMetrics</li>
-            <li>Remove any copyright or other proprietary notations from the materials</li>
-            <li>Transfer the materials to another person or "mirror" the materials on any other server</li>
+            <li>You may use, modify, and share generated reports without restriction</li>
+            <li>Commercial and personal use are both permitted</li>
+            <li>Use must not be intended to harm individuals, organizations, or commercial entities</li>
+            <li>We encourage attribution but do not require it</li>
+            <li>All use must comply with the <a href="https://www-cdn.anthropic.com/6b68a6508f0210c5fe08f0199caa05c4ee6fb4dc/Anthropic-on-Bedrock-Commercial-Terms-of-Service_Dec_2023.pdf" target="_blank" class="underline text-[#21C063]">Anthropic on Bedrock Commercial Terms of Service</a></li>
           </ul>
         </section>
 
