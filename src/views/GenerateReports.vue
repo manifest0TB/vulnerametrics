@@ -20,18 +20,22 @@ const cveDetails = ref<CveDetails | null>(null);
 const isGeneratingReport = ref(false);
 const reportUrl = ref<string | null>(null);
 
-// Message and animated color for report generation loading
+// Loading messages and colors for report generation progress
 const loadingMessages = [
-  'This will take a few seconds…',
-  'AI is analyzing the vulnerability…',
-  'Generating your report…',
-  'Almost there! Preparing your PDF…'
+  'Initializing analysis...',
+  'AI is analyzing the vulnerability...',
+  'Generating your report...',
+  'Finalizing PDF report...'
 ];
+
+// Progressive colors from darker to brighter green to show progress
 const loadingColors = [
-  'text-[#21C063]',
-  'text-[#38BDF8]',
-  'text-[#F59E42]'
+  'text-[#0D4D2A]',  // Darker shade of green
+  'text-[#16994A]',  // Medium dark green
+  'text-[#1DB863]',  // Medium bright green
+  'text-[#21C063]'   // Our primary bright green
 ];
+
 const loadingMessage = ref(loadingMessages[0]);
 const loadingColorClass = ref(loadingColors[0]);
 let loadingInterval: number | null = null;
@@ -41,12 +45,13 @@ watch(
   (newVal) => {
     if (newVal) {
       let i = 0;
-      // 35 segundos dividido entre 4 mensajes = 8.75s por mensaje
+      // Distribute 4 messages over 16 seconds = 4s per message
+      // This provides a smooth loading experience while covering the actual generation time (~12-14s)
       loadingInterval = window.setInterval(() => {
         i = (i + 1) % loadingMessages.length;
         loadingMessage.value = loadingMessages[i];
         loadingColorClass.value = loadingColors[i % loadingColors.length];
-      }, 8750);
+      }, 4000);
     } else if (loadingInterval) {
       clearInterval(loadingInterval);
       loadingInterval = null;
@@ -256,8 +261,9 @@ onMounted(() => {
                   <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                   <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
-                <p class="text-base sm:text-xl font-medium text-center max-w-xs sm:max-w-md" :class="loadingColorClass">{{ loadingMessage }}</p>
-                <p class="text-xs sm:text-sm text-[#B0B3B8] mt-2 sm:mt-3 text-center">This may take a few moments...</p>
+                <p class="text-base sm:text-xl font-medium text-center max-w-xs sm:max-w-md" :class="loadingColorClass">
+                  {{ loadingMessage }}
+                </p>
               </div>
             </div>
             <h3 class="text-3xl font-bold text-[#21C063] mb-6 text-center">Vulnerability Found</h3>
