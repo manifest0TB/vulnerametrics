@@ -37,7 +37,7 @@ onMounted(() => {
       </p>
       <RouterLink
         to="/generate-reports"
-        class="bg-primary hover:bg-primary-hover text-white w-full max-w-xs sm:w-auto px-4 py-2 text-sm sm:text-lg rounded-xl shadow-lg font-semibold transition cta-glow"
+        class="bg-primary hover:bg-primary-hover text-white w-full max-w-xs sm:w-auto px-4 py-2 text-sm sm:text-lg rounded-xl shadow-lg font-semibold transition cta-glow text-center flex items-center justify-center"
       >
         Search CVE
       </RouterLink>
