@@ -3,6 +3,8 @@
 
 [API DOCUMENTATION](https://github.com/manifest0TB/vulnerametrics/blob/main/vulnerametricsAPI.md)
 
+[LAMBDA FUNCTIONS DOCUMENTATION](https://github.com/manifest0TB/vulnerametrics-lambda-functions/tree/main/docs)
+
 ## Overview
 The Vulnerametrics frontend is a Vue.js application that provides a user interface for searching and generating CVE reports. It integrates with AWS services through a REST API and implements user authentication via Amazon Cognito.
 
