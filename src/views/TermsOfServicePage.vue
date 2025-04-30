@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import HomeIcon from '../assets/icons/home.svg';
 // Terms of Service page component
 </script>
 
@@ -7,12 +8,10 @@
     <div class="w-full max-w-4xl">
       <RouterLink
         to="/"
-        class="bg-primary hover:bg-primary-hover text-white p-3 rounded-xl shadow-lg transition flex items-center justify-center mx-auto mb-6"
+        class="bg-primary hover:bg-primary-hover text-white p-3 rounded-full w-12 h-12 shadow-lg transition flex items-center justify-center fixed top-6 left-6"
         aria-label="Return to home"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l-9 9" />
-        </svg>
+        <img :src="HomeIcon" alt="Home" class="w-6 h-6" />
       </RouterLink>
       <h1 class="mb-6 sm:mb-8 text-center text-2xl sm:text-3xl font-semibold text-white">
         Terms of Service
@@ -106,6 +105,12 @@
             Last Updated: April 2025
           </p>
         </section>
+
+        <div class="text-center mt-8">
+          <RouterLink to="/privacy-policy" class="text-[#21C063] hover:text-[#1aa755] text-sm underline">
+            View Privacy Policy
+          </RouterLink>
+        </div>
       </div>
     </div>
   </div>
