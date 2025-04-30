@@ -97,7 +97,7 @@ import HomeIcon from '../assets/icons/home.svg';
         </section>
 
         <div class="text-center mt-8">
-          <RouterLink to="/terms-of-service" class="text-[#21C063] hover:text-[#1aa755] text-sm underline">
+          <RouterLink to="/terms" class="text-[#21C063] hover:text-[#1aa755] text-sm underline">
             View Terms of Service
           </RouterLink>
         </div>

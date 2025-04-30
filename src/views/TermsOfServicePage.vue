@@ -107,7 +107,7 @@ import HomeIcon from '../assets/icons/home.svg';
         </section>
 
         <div class="text-center mt-8">
-          <RouterLink to="/privacy-policy" class="text-[#21C063] hover:text-[#1aa755] text-sm underline">
+          <RouterLink to="/privacy" class="text-[#21C063] hover:text-[#1aa755] text-sm underline">
             View Privacy Policy
           </RouterLink>
         </div>
