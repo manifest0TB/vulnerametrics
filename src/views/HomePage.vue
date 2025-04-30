@@ -33,7 +33,7 @@ onMounted(() => {
         {{ animatedTitle }}<span v-if="animatedTitle.length < fullTitle.length" class="typewriter-cursor">|</span>
       </h1>
       <p class="text-sm sm:text-lg text-[#B0B3B8] mb-4 sm:mb-8 text-center">
-        A cybersecurity tool to generate CVEs reports using Claude 3.7 Sonnet on AWS Bedrock. 
+        A security tool to generate vulnerability reports through Claude 3.7 Sonnet on AWS Bedrock using the National Vulnerability Database. 
       </p>
       <RouterLink
         to="/generate-reports"
