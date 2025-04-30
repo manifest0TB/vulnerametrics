@@ -5,7 +5,7 @@
 
 [API documentation](https://github.com/manifest0TB/vulnerametrics/blob/main/vulnerametricsAPI.md)
 
-![api_img_reference](https://ibb.co/G4rKXsSj)
+![api_img_reference](<a href="https://imgbb.com/"><img src="https://i.ibb.co/ksPRp3CF/2025-04-30-01-17.png" alt="2025-04-30-01-17" border="0"></a><br /><a target='_blank' href='https://imgbb.com/'>upload pic</a><br />)
 
 ## Overview
 The Vulnerametrics frontend is a Vue.js application that provides a user interface for searching and generating CVE reports. It integrates with AWS services through a REST API and implements user authentication via Amazon Cognito.
