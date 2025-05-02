@@ -64,8 +64,8 @@ The frontend implements authentication using Amazon Cognito through the followin
 * Tailwind CSS for styling
 * Pinia for state management
 * Vue Router for navigation
-* AWS Amplify for authentication
-* Axios for API communication
+* AWS Amplify for authentication and API communication
+* Zod for schema validation
 
 ## Environment Configuration
 The application uses environment variables for configuration:
