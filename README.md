@@ -29,7 +29,6 @@ The Vulnerametrics frontend is a Vue.js application that provides a user interfa
 * `App.vue` - Root component
 * `vite.config.ts` - Vite configuration
 * `tailwind.config.js` - Tailwind CSS configuration
-* `.env` - Environment variables
 
 ## Authentication Flow
 The frontend implements authentication using Amazon Cognito through the following flow:
